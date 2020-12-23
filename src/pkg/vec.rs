@@ -1,4 +1,3 @@
-use std::error::Error;
 use crate::pkg::err::Result;
 use crate::none;
 

@@ -24,7 +24,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="get conn">
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/event.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/vec.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/vec.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -105,6 +105,20 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test event::event::test_calc_version_product" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package mysqlbinlog-network --lib event::event::test_calc_version_product -- --exact" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/../mysqlbinlog_network" />
+      <option name="channel" value="DEFAULT" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="build --package drcDamllMysql --lib" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -141,9 +155,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Run mysqlbinlog-network" />
+        <item itemvalue="Cargo.Test event::event::test_calc_version_product" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build" />
-        <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.run" />
       </list>
     </recent_temporary>
@@ -168,7 +182,7 @@
       <workItem from="1608599349097" duration="29952000" />
       <workItem from="1608685860391" duration="287000" />
       <workItem from="1608686208336" duration="368000" />
-      <workItem from="1608686623664" duration="15776000" />
+      <workItem from="1608686623664" duration="19791000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -240,7 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608706119257</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="get conn">
+      <created>1608711036051</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1608711036051</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

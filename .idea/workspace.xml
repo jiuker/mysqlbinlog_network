@@ -23,8 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="get conn">
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/rows_event.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/vec.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/vec.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +182,7 @@
       <workItem from="1608599349097" duration="29952000" />
       <workItem from="1608685860391" duration="287000" />
       <workItem from="1608686208336" duration="368000" />
-      <workItem from="1608686623664" duration="19950000" />
+      <workItem from="1608686623664" duration="20952000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -267,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608714951997</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="get conn">
+      <created>1608715113757</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1608715113757</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

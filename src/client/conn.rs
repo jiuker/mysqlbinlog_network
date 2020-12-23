@@ -9,8 +9,9 @@ use std::env::consts::OS;
 use sys_info::hostname;
 use mysql_binlog::EventIterator;
 use mysql_binlog::errors::BinlogParseError;
-use mysqlbinlog::Event;
 use std::num::Wrapping;
+use crate::pkg::vec::get_vec;
+use crate::pkg::end_dian::{u16lit,u32lit};
 
 pub struct BaseConn{
     br:BufReader<TcpStream>,
@@ -114,49 +115,7 @@ const CACHE_SHA2_FAST_AUTH:u8 = 0x03;
 const CACHE_SHA2_FULL_AUTH:u8 = 0x04;
 const SemiSyncIndicator:u8 = 0xef;
 
-macro_rules! base_u {
-    ($fun_name:ident,$fun_name_big:ident,$result_type:ty,$max:expr) => (
-        pub fn $fun_name(&mut self, b: &[u8]) -> $result_type {
-            let mut rsl:$result_type = 0;
-            let mut index = 0;
-            while index <= $max {
-                rsl = (b[index] as $result_type) << 8*index | rsl;
-                index = index + 1;
-            }
-            rsl
-        }
-        pub fn $fun_name_big(&mut self, b: &[u8]) -> $result_type {
-            let mut rsl:$result_type = 0;
-            let mut index = 0;
-            while index <= $max {
-                rsl = (b[($max-index)] as $result_type) << 8*index | rsl;
-                index = index + 1;
-            }
-            rsl
-        }
-    );
-}
-
-// 获取类似vec取index..start
-fn get_vec(data:&Vec<u8>,start:usize,offset:usize)->Result<Vec<u8>,Box<dyn Error>> {
-    let mut rsl = vec![];
-    let mut find_offset = 0;
-    if offset == 0{
-        find_offset = data.len() - start -1
-    }else{
-        find_offset = offset
-    }
-    for index in start..start+find_offset{
-        rsl.push(data.get(index).expect("超出index").clone().into());
-    }
-    Ok(rsl)
-}
-
 impl Conn{
-    base_u!(u8,u8big,u8,0);
-    base_u!(u16,u16big,u16,1);
-    base_u!(u32,u32big,u32,3);
-    base_u!(u64,u64big,u64,7);
     pub fn new(addr:String,user:String,password:String,db:String)->Result<Self,Box<dyn Error>>{
         let tcp_conn = TcpStream::connect(addr.clone())?;
         let mut conn = Conn{
@@ -194,11 +153,11 @@ impl Conn{
         }
         // skip mysql version
         let mut pos = (1+data.index(0x00)+1) as usize;
-        self.connection_id = self.u32(get_vec(&data, pos, 4)?.as_slice());
+        self.connection_id = u32lit(get_vec(&data, pos, 4)?.as_slice());
         pos+=4;
         self.salt.append(&mut get_vec(&data, pos, 8)?);
         pos += 8 + 1;
-        self.capability = self.u16(get_vec(&data, pos, 2)?.as_slice()) as u32;
+        self.capability = u16lit(get_vec(&data, pos, 2)?.as_slice()) as u32;
         if self.capability&CLIENT_PROTOCOL_41 ==0{
             return Err(Box::from("the MySQL server can not support protocol 41 and above required by the client"));
         }
@@ -209,9 +168,9 @@ impl Conn{
         pos += 2;
         if data.len()> pos as usize {
             pos+=1;
-            self.status = self.u16(get_vec(&data, pos, 2)?.as_slice());
+            self.status = u16lit(get_vec(&data, pos, 2)?.as_slice());
             pos += 2;
-            self.capability = (((self.u16(get_vec(&data, pos, 2)?.as_slice()) as u32) << 16 as u32)as u32| self.capability) as u32;
+            self.capability = (((u16lit(get_vec(&data, pos, 2)?.as_slice()) as u32) << 16 as u32)as u32| self.capability) as u32;
             pos += 2;
             pos += 10 + 1;
             self.salt.append(&mut get_vec(&data, pos, 12)?);
@@ -348,7 +307,7 @@ impl Conn{
     }
     fn handle_error_packet(&mut self, data:Vec<u8>) ->Result<(),Box<dyn Error>>{
         let mut pos =1;
-        let code = self.u16(get_vec(&data, pos, 0)?.as_slice());
+        let code = u16lit(get_vec(&data, pos, 0)?.as_slice());
         pos += 2;
         let mut state = "".to_string();
         if self.capability&CLIENT_PROTOCOL_41 > 0 {
@@ -503,19 +462,21 @@ impl Conn{
         loop{
             let rsl = match self.base_conn.read_packet(){
                 Ok(data)=>{
-                    match *data.get(0)? {
+                    match *data.get(0).unwrap() {
                         OK_HEADER=>{
                             // success
                             // skip success
-                            let data = get_vec(&data,1,0)?;
+                            let mut data = get_vec(&data,1,0)?;
                             let mut need_ack = false;
-                            if *data.get(0)?==SemiSyncIndicator{
-                                need_ack = *data.get(1)? == 0x01;
+                            if *data.get(0).unwrap()==SemiSyncIndicator{
+                                need_ack = *data.get(1).unwrap() == 0x01;
                                 data = get_vec(&data,2,0)?;
                             }
+                            data
                         }
                         _ =>{
                             // error
+                            vec![]
                         }
                     }
                 },
@@ -524,7 +485,7 @@ impl Conn{
                 }
             };
             dbg!(rsl.len());
-        }
+        };
     }
 }
 fn calc_password(scramble:Vec<u8>, password:Vec<u8>) ->Vec<u8>{

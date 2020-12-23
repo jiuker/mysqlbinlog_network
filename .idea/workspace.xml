@@ -23,12 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="get conn">
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/event.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/parser.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/end_dian.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/mod.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/vec.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,12 +69,17 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mysqlbinlog_network" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ycss-rs" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg" />
+    </key>
   </component>
   <component name="RunManager" selected="Cargo.Run mysqlbinlog-network">
     <configuration name="Run mysqlbinlog-network" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
@@ -166,7 +173,7 @@
       <workItem from="1608599349097" duration="29952000" />
       <workItem from="1608685860391" duration="287000" />
       <workItem from="1608686208336" duration="368000" />
-      <workItem from="1608686623664" duration="3418000" />
+      <workItem from="1608686623664" duration="7278000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -189,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608689360812</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="get conn">
+      <created>1608690317225</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1608690317225</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

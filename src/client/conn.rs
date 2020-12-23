@@ -10,6 +10,7 @@ use sys_info::hostname;
 use mysql_binlog::EventIterator;
 use mysql_binlog::errors::BinlogParseError;
 use mysqlbinlog::Event;
+use std::num::Wrapping;
 
 pub struct BaseConn{
     br:BufReader<TcpStream>,
@@ -29,13 +30,11 @@ impl BaseConn{
         let mut header =[0;4];
         self.br.read_exact(&mut header)?;
         let length = (header[0] as u32 | ((header[1] as u32)<<8)|((header[2] as u32)<<16)) as i32;
-        dbg!(header);
         let sequence = header[3];
         if sequence!=self.sequence{
             return Err(Box::from("sequence 不正确!"));
         }
-        self.sequence +=1
-        ;
+        self.sequence = self.sequence.wrapping_add(1);
         let mut buf =vec![0; length as usize];
         self.br.read_exact(&mut buf)?;
         Ok(buf)
@@ -48,7 +47,7 @@ impl BaseConn{
         *data.get_mut(2).unwrap() = (length >> 16 as u8) as u8;
         *data.get_mut(3).unwrap() = self.sequence as u8;
         self.bw.write(data.as_slice())?;
-        self.sequence = self.sequence+1;
+        self.sequence = self.sequence.wrapping_add(1);
         self.bw.flush();
         Ok(())
     }
@@ -171,7 +170,7 @@ impl Conn{
             capability: 0,
             status: 0,
             auth_plugin_name: "".to_string(),
-            server_id: 101,
+            server_id: 789,
             port: 3306
         };
         conn.hand_shake()?;
@@ -232,14 +231,14 @@ impl Conn{
     fn write_auth_handshake(&mut self) ->Result<(),Box<dyn Error>>{
         let mut capability = CLIENT_PROTOCOL_41 | CLIENT_SECURE_CONNECTION | CLIENT_LONG_PASSWORD | CLIENT_TRANSACTIONS | CLIENT_PLUGIN_AUTH | self.capability&CLIENT_LONG_FLAG;
         // todo tls
-        let (auth, addNull) = self.gen_auth_response(self.salt.clone())?;
+        let (auth, add_null) = self.gen_auth_response(self.salt.clone())?;
         let mut auth_resp_leibuf = vec![];
         let auth_resp_lei = append_length_encoded_integer(auth_resp_leibuf, auth.len() as u64);
         if auth_resp_lei.len()>1{
             capability |= CLIENT_PLUGIN_AUTH_LENENC_CLIENT_DATA;
         }
         let mut length = 4 + 4 + 1 + 23 + self.user.len() + 1 + auth_resp_lei.len() + auth.len() + 21 + 1;
-        if addNull {
+        if add_null {
             length+=1;
         }
 // db name
@@ -290,7 +289,7 @@ impl Conn{
             pos+=1;
         }
 
-        if addNull {
+        if add_null {
             *data.get_mut(pos).unwrap() = 0x00;
             pos+=1;
         }
@@ -404,17 +403,10 @@ impl Conn{
         self.execute("SHOW GLOBAL VARIABLES LIKE 'BINLOG_CHECKSUM'".to_string(),6).unwrap();
         self.execute("SET @master_binlog_checksum='NONE';".to_string(),1).unwrap();
         self.write_register_slave_command().unwrap();
-
         let rsl = self.base_conn.read_packet()?;
         dbg!(rsl);
-
-
         self.execute("SHOW VARIABLES LIKE 'rpl_semi_sync_master_enabled';".to_string(),5).unwrap();
         self.execute("SET @rpl_semi_sync_slave = 1;".to_string(),1).unwrap();
-
-
-
-
         Ok(())
     }
     fn write_binlog_dump_command(&mut self, pos_args:Pos) ->Result<(),Box<dyn Error>>{
@@ -514,7 +506,6 @@ impl Conn{
                     continue;
                 }
             };
-            self.base_conn.reset_sequence();
             dbg!(rsl.len());
         }
     }
@@ -571,35 +562,35 @@ fn calc_caching_sha2password(scramble:Vec<u8>, password:Vec<u8>) ->Vec<u8>{
     scramble.to_vec()
 }
 fn append_length_encoded_integer(mut b:Vec<u8>, n:u64) ->Vec<u8>{
-    match n {
-        n if n<=250 =>{
+    return match n {
+        n if n <= 250 => {
             b.push(n as u8);
-            return b;
+            b
         }
-        n if n<=0xffff =>{
+        n if n <= 0xffff => {
             b.push(0xfc);
             b.push(n as u8);
-            b.push((n>>8) as u8);
-            return b;
+            b.push((n >> 8) as u8);
+            b
         }
-        n if n<=0xffffff =>{
+        n if n <= 0xffffff => {
             b.push(0xfc);
             b.push(n as u8);
-            b.push((n>>8) as u8);
-            b.push((n>>16) as u8);
-            return b;
+            b.push((n >> 8) as u8);
+            b.push((n >> 16) as u8);
+            b
         }
-        _ =>{
+        _ => {
             b.push(0xfc);
             b.push(n as u8);
-            b.push((n>>8) as u8);
-            b.push((n>>16) as u8);
-            b.push((n>>24) as u8);
-            b.push((n>>32) as u8);
-            b.push((n>>40) as u8);
-            b.push((n>>48) as u8);
-            b.push((n>>56) as u8);
-            return b;
+            b.push((n >> 8) as u8);
+            b.push((n >> 16) as u8);
+            b.push((n >> 24) as u8);
+            b.push((n >> 32) as u8);
+            b.push((n >> 40) as u8);
+            b.push((n >> 48) as u8);
+            b.push((n >> 56) as u8);
+            b
         }
     };
 }

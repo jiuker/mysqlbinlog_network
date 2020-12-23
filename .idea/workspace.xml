@@ -23,14 +23,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="get conn">
-      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/event.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/parser.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/end_dian.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/vec.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/err.rs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/ops.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/event/event.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/end_dian.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/end_dian.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +172,7 @@
       <workItem from="1608599349097" duration="29952000" />
       <workItem from="1608685860391" duration="287000" />
       <workItem from="1608686208336" duration="368000" />
-      <workItem from="1608686623664" duration="7278000" />
+      <workItem from="1608686623664" duration="12140000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -203,7 +202,21 @@
       <option name="project" value="LOCAL" />
       <updated>1608690317225</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="get conn">
+      <created>1608694186871</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1608694186871</updated>
+    </task>
+    <task id="LOCAL-00006" summary="get conn">
+      <created>1608694191997</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1608694191997</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -1,17 +1,13 @@
-use std::io::{BufReader, BufWriter, Read, Write, Cursor, Bytes, copy};
+use std::io::{BufReader, BufWriter, Read, Write};
 use std::net::TcpStream;
 use std::ops::Index;
-use byteorder::{ReadBytesExt, BigEndian};
 use std::error::Error;
 use sha1::Sha1;
 use crate::client::pos::Pos;
-use std::env::consts::OS;
-use sys_info::hostname;
-use mysql_binlog::EventIterator;
-use mysql_binlog::errors::BinlogParseError;
-use std::num::Wrapping;
 use crate::pkg::vec::get_vec;
 use crate::pkg::end_dian::{u16lit,u32lit};
+use crate::pkg::err::Result;
+
 
 pub struct BaseConn{
     br:BufReader<TcpStream>,
@@ -27,7 +23,7 @@ impl BaseConn{
             bw:BufWriter::with_capacity(65536,conn.try_clone().unwrap()),
         }
     }
-    pub fn read_packet(&mut self) ->Result<Vec<u8>,Box<dyn Error>>{
+    pub fn read_packet(&mut self) ->Result<Vec<u8>>{
         let mut header =[0;4];
         self.br.read_exact(&mut header)?;
         let length = (header[0] as u32 | ((header[1] as u32)<<8)|((header[2] as u32)<<16)) as i32;
@@ -40,7 +36,7 @@ impl BaseConn{
         self.br.read_exact(&mut buf)?;
         Ok(buf)
     }
-    pub fn write_pack(&mut self, mut data: Vec<u8>) ->Result<(),Box<dyn Error>>{
+    pub fn write_pack(&mut self, mut data: Vec<u8>) ->Result<()>{
         let length = data.len()-4;
         // header
         *data.get_mut(0).unwrap() = length as u8;
@@ -116,7 +112,7 @@ const CACHE_SHA2_FULL_AUTH:u8 = 0x04;
 const SemiSyncIndicator:u8 = 0xef;
 
 impl Conn{
-    pub fn new(addr:String,user:String,password:String,db:String)->Result<Self,Box<dyn Error>>{
+    pub fn new(addr:String,user:String,password:String,db:String)->Result<Self>{
         let tcp_conn = TcpStream::connect(addr.clone())?;
         let mut conn = Conn{
             base_conn:BaseConn::new(tcp_conn),
@@ -136,14 +132,14 @@ impl Conn{
         conn.hand_shake()?;
         Ok(conn)
     }
-    fn hand_shake(&mut self) ->Result<(),Box<dyn Error>>{
+    fn hand_shake(&mut self) ->Result<()>{
         self.read_init_hand_shake()?;
         self.write_auth_handshake()?;
         self.read_auth_result()?;
         Ok(())
     }
 
-    fn read_init_hand_shake(&mut self) ->Result<(),Box<dyn Error>>{
+    fn read_init_hand_shake(&mut self) ->Result<()>{
         let data = self.base_conn.read_packet()?;
         if *data.get(0).unwrap() == ERR_HEADER{
             return Err(Box::from("read initial handshake error"));
@@ -188,7 +184,7 @@ impl Conn{
         }
         Ok(())
     }
-    fn write_auth_handshake(&mut self) ->Result<(),Box<dyn Error>>{
+    fn write_auth_handshake(&mut self) ->Result<()>{
         let mut capability = CLIENT_PROTOCOL_41 | CLIENT_SECURE_CONNECTION | CLIENT_LONG_PASSWORD | CLIENT_TRANSACTIONS | CLIENT_PLUGIN_AUTH | self.capability&CLIENT_LONG_FLAG;
         // todo tls
         let (auth, add_null) = self.gen_auth_response(self.salt.clone())?;
@@ -271,7 +267,7 @@ impl Conn{
         self.base_conn.write_pack(data);
         Ok(())
     }
-    fn gen_auth_response(&mut self, auth_data:Vec<u8>) ->Result<(Vec<u8>, bool),Box<dyn Error>>{
+    fn gen_auth_response(&mut self, auth_data:Vec<u8>) ->Result<(Vec<u8>, bool)>{
         return match self.auth_plugin_name.as_str() {
             AUTH_NATIVE_PASSWORD => {
                 Ok((calc_password(get_vec(&auth_data, 0, 20)?, self.password.as_bytes().to_vec()), false, ))
@@ -287,7 +283,7 @@ impl Conn{
             }
         };
     }
-    fn read_auth_result(&mut self) ->Result<(Vec<u8>,String),Box<dyn Error>>{
+    fn read_auth_result(&mut self) ->Result<(Vec<u8>,String)>{
         let data = self.base_conn.read_packet().unwrap();
         match *data.get(0).unwrap(){
             OK_HEADER=>{
@@ -305,7 +301,7 @@ impl Conn{
         };
         Ok((vec![],"".to_string()))
     }
-    fn handle_error_packet(&mut self, data:Vec<u8>) ->Result<(),Box<dyn Error>>{
+    fn handle_error_packet(&mut self, data:Vec<u8>) ->Result<()>{
         let mut pos =1;
         let code = u16lit(get_vec(&data, pos, 0)?.as_slice());
         pos += 2;
@@ -317,9 +313,9 @@ impl Conn{
             pos += 5;
         };
         let message = String::from_utf8(get_vec(&data, pos, 0)?)?;
-        Err(Box::from(format!("[{}]:{}", code, message)))
+        Err(Box::from(format!("[{}][{}]:{}", code,state, message)))
     }
-    fn exec(&mut self,cmd:String)->Result<(),Box<dyn Error>>{
+    fn exec(&mut self,cmd:String)->Result<()>{
         let mut length = cmd.bytes().len() + 1;
         let mut data = vec![0; length + 4];
         // Query Type
@@ -332,7 +328,7 @@ impl Conn{
         self.base_conn.write_pack(data)?;
         Ok(())
     }
-    pub fn execute(&mut self, cmd:String, ignore:i32) ->Result<(),Box<dyn Error>>{
+    pub fn execute(&mut self, cmd:String, ignore:i32) ->Result<()>{
         self.base_conn.reset_sequence();
         self.exec(cmd)?;
         let mut count = 0;
@@ -343,11 +339,11 @@ impl Conn{
         }
         Ok(())
     }
-    pub fn start_sync(&mut self, pos:Pos) ->Result<(),Box<dyn Error>>{
+    pub fn start_sync(&mut self, pos:Pos) ->Result<()>{
         self.prepare_sync_pos(pos);
         Ok(())
     }
-    fn prepare_sync_pos(&mut self, mut pos:Pos) ->Result<(),Box<dyn Error>>{
+    fn prepare_sync_pos(&mut self, mut pos:Pos) ->Result<()>{
         if pos.pos<4 {
             pos.pos = 4;
         };
@@ -355,11 +351,11 @@ impl Conn{
         self.write_binlog_dump_command(pos).unwrap();
         Ok(())
     }
-    fn prepare(&mut self)->Result<(),Box<dyn Error>>{
+    fn prepare(&mut self)->Result<()>{
         self.register_slave();
         Ok(())
     }
-    fn register_slave(&mut self) ->Result<(),Box<dyn Error>>{
+    fn register_slave(&mut self) ->Result<()>{
         self.execute("SHOW GLOBAL VARIABLES LIKE 'BINLOG_CHECKSUM'".to_string(),6).unwrap();
         self.execute("SET @master_binlog_checksum='NONE';".to_string(),1).unwrap();
         self.write_register_slave_command().unwrap();
@@ -369,7 +365,7 @@ impl Conn{
         self.execute("SET @rpl_semi_sync_slave = 1;".to_string(),1).unwrap();
         Ok(())
     }
-    fn write_binlog_dump_command(&mut self, pos_args:Pos) ->Result<(),Box<dyn Error>>{
+    fn write_binlog_dump_command(&mut self, pos_args:Pos) ->Result<()>{
         self.base_conn.reset_sequence();
         let mut data = vec![0; 4+1+4+2+4+pos_args.name.len()];
         let mut pos = 4;
@@ -399,7 +395,7 @@ impl Conn{
         };
         self.base_conn.write_pack(data)
     }
-    fn write_register_slave_command(&mut self) ->Result<(),Box<dyn Error>>{
+    fn write_register_slave_command(&mut self) ->Result<()>{
         self.base_conn.reset_sequence();
         let h_name =  sys_info::hostname()?;
         let mut data = vec![0; 4+1+4+1+h_name.bytes().len()+1+self.user.len()+1+self.password.len()+2+4+4];
@@ -458,7 +454,7 @@ impl Conn{
 
         self.base_conn.write_pack(data)
     }
-    pub fn get_event(&mut self) ->Result<(),Box<dyn Error>>{
+    pub fn get_event(&mut self) ->Result<()>{
         loop{
             let rsl = match self.base_conn.read_packet(){
                 Ok(data)=>{

@@ -2,6 +2,7 @@ use crate::pkg::err::Result;
 use crate::none;
 
 // 获取类似vec取index..start
+// offset 为 0 就是全部
 pub fn get_vec(data:&Vec<u8>,start:usize,offset:usize)->Result<Vec<u8>> {
     let mut rsl = vec![];
     let mut find_offset = 0;

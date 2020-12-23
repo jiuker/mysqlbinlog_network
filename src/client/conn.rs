@@ -112,6 +112,7 @@ const LOCAL_IN_FILE_HEADER:u8 = 0xfb;
 
 const CACHE_SHA2_FAST_AUTH:u8 = 0x03;
 const CACHE_SHA2_FULL_AUTH:u8 = 0x04;
+const SemiSyncIndicator:u8 = 0xef;
 
 macro_rules! base_u {
     ($fun_name:ident,$fun_name_big:ident,$result_type:ty,$max:expr) => (
@@ -501,7 +502,23 @@ impl Conn{
     pub fn get_event(&mut self) ->Result<(),Box<dyn Error>>{
         loop{
             let rsl = match self.base_conn.read_packet(){
-                Ok(data)=>{data},
+                Ok(data)=>{
+                    match *data.get(0)? {
+                        OK_HEADER=>{
+                            // success
+                            // skip success
+                            let data = get_vec(&data,1,0)?;
+                            let mut need_ack = false;
+                            if *data.get(0)?==SemiSyncIndicator{
+                                need_ack = *data.get(1)? == 0x01;
+                                data = get_vec(&data,2,0)?;
+                            }
+                        }
+                        _ =>{
+                            // error
+                        }
+                    }
+                },
                 Err(e)=>{
                     continue;
                 }

@@ -1,6 +1,6 @@
 use std::net::TcpStream;
-use drcDamllMysql::client::conn::{BaseConn, Conn};
-use drcDamllMysql::client::pos::Pos;
+use mysqlbinlog_network::client::conn::Conn;
+use mysqlbinlog_network::client::pos::Pos;
 
 fn main() {
     let mut conn = Conn::new("127.0.0.1:3306".to_string(),"root".to_string(),"123456".to_string(),"dmall".to_string()).unwrap();

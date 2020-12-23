@@ -19,11 +19,16 @@
   </component>
   <component name="CargoProjects">
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
+    <cargoProject FILE="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="first import">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/conn.rs" afterDir="false" />
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="get conn">
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,16 +46,16 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../mysqlbinlog_network" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/src/client/conn.rs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" root0="SKIP_INSPECTION" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="ipcb6j8u" />
   </component>
   <component name="ProjectId" id="1ldPkb2wMtacv73REWjs2tVPvrN" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -62,14 +67,28 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../redis-shake-rc" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../mysqlbinlog_network" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="language.rust.rustfmt" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="Cargo.run">
+  <component name="RunManager" selected="Cargo.Run mysqlbinlog-network">
+    <configuration name="Run mysqlbinlog-network" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="run --package mysqlbinlog-network --bin mysqlbinlog-network" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$/../mysqlbinlog_network" />
+      <option name="channel" value="DEFAULT" />
+      <option name="allFeatures" value="false" />
+      <option name="emulateTerminal" value="false" />
+      <option name="backtrace" value="SHORT" />
+      <envs />
+      <option name="isRedirectInput" value="false" />
+      <option name="redirectInputPath" value="" />
+      <method v="2">
+        <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
       <option name="command" value="run --package drcDamllMysql --bin drcDamllMysql" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -112,8 +131,14 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Cargo.Run mysqlbinlog-network" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build" />
         <item itemvalue="Cargo.run" />
@@ -141,7 +166,7 @@
       <workItem from="1608599349097" duration="29952000" />
       <workItem from="1608685860391" duration="287000" />
       <workItem from="1608686208336" duration="368000" />
-      <workItem from="1608686623664" duration="2245000" />
+      <workItem from="1608686623664" duration="3418000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -150,7 +175,21 @@
       <option name="project" value="LOCAL" />
       <updated>1608685967222</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="get conn">
+      <created>1608689153374</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1608689153374</updated>
+    </task>
+    <task id="LOCAL-00003" summary="get conn">
+      <created>1608689360812</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1608689360812</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -170,8 +209,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
     <MESSAGE value="first import" />
-    <option name="LAST_COMMIT_MESSAGE" value="first import" />
+    <MESSAGE value="get conn" />
+    <option name="LAST_COMMIT_MESSAGE" value="get conn" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

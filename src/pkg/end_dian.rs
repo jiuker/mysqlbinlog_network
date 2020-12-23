@@ -48,7 +48,7 @@ macro_rules! base_put_u {
     );
 }
 
-base_put_u!(put_u8lit,put_u8big,u8,1);
-base_put_u!(put_u16lit,put_u16big,u16,2);
-base_put_u!(put_u32lit,put_u32big,u32,4);
-base_put_u!(put_u64lit,put_u64big,u64,8);
+base_put_u!(put_u8lit_1,put_u8big_1,u8,1);
+base_put_u!(put_u16lit_2,put_u16big_2,u16,2);
+base_put_u!(put_u32lit_4,put_u32big_4,u32,4);
+base_put_u!(put_u64lit_8,put_u64big_8,u64,8);

@@ -5,7 +5,7 @@ use std::error::Error;
 use sha1::Sha1;
 use crate::client::pos::Pos;
 use crate::pkg::vec::get_vec;
-use crate::pkg::end_dian::{u16lit,u32lit};
+use crate::pkg::end_dian::{u16lit, u32lit, put_u32lit_4, put_u16lit_2, put_u8lit_1};
 use crate::pkg::err::Result;
 
 
@@ -401,16 +401,14 @@ impl Conn{
         let mut data = vec![0; 4+1+4+1+h_name.bytes().len()+1+self.user.len()+1+self.password.len()+2+4+4];
         let mut pos = 4;
         // slave
-        *data.get_mut(pos).unwrap() = 21;
+
+        put_u8lit_1(&mut data,pos,21)?;
         pos+=1;
 
-        *data.get_mut(pos).unwrap() = self.server_id as u8;
-        *data.get_mut(pos+1).unwrap() = (self.server_id>>8) as u8;
-        *data.get_mut(pos+2).unwrap() = (self.server_id>>16) as u8;
-        *data.get_mut(pos+3).unwrap() = (self.server_id>>24) as u8;
+        put_u32lit_4(&mut data,pos,self.server_id)?;
         pos += 4;
 
-        *data.get_mut(pos).unwrap() = h_name.len() as u8;
+        put_u8lit_1(&mut data,pos,h_name.len() as u8)?;
         pos+=1;
         let mut i =0;
         for b in h_name.bytes(){
@@ -419,8 +417,9 @@ impl Conn{
         };
         pos += h_name.bytes().len();
 
-        *data.get_mut(pos).unwrap() = self.user.len() as u8;
+        put_u8lit_1(&mut data,pos,self.user.len() as u8)?;
         pos+=1;
+
         let mut i =0;
         for b in self.user.bytes(){
             *data.get_mut(pos+i).unwrap() =b;
@@ -428,8 +427,9 @@ impl Conn{
         };
         pos += self.user.bytes().len();
 
-        *data.get_mut(pos).unwrap() = self.password.len() as u8;
+        put_u8lit_1(&mut data,pos,self.password.len() as u8)?;
         pos+=1;
+
         let mut i =0;
         for b in self.password.bytes(){
             *data.get_mut(pos+i).unwrap() =b;
@@ -437,21 +437,12 @@ impl Conn{
         };
         pos += self.password.bytes().len();
 
-        *data.get_mut(pos).unwrap() = self.port as u8;
-        *data.get_mut(pos+1).unwrap() = (self.port>>8) as u8;
+        put_u16lit_2(&mut data,pos,self.port)?;
         pos += 2;
+        put_u32lit_4(&mut data,pos,0)?;
 
-        *data.get_mut(pos).unwrap() = 0 as u8;
-        *data.get_mut(pos+1).unwrap() = (0>>8) as u8;
-        *data.get_mut(pos+2).unwrap() = (0>>16) as u8;
-        *data.get_mut(pos+3).unwrap() = (0>>24) as u8;
         pos += 4;
-
-        *data.get_mut(pos).unwrap() = 0 as u8;
-        *data.get_mut(pos+1).unwrap() = (0>>8) as u8;
-        *data.get_mut(pos+2).unwrap() = (0>>16) as u8;
-        *data.get_mut(pos+3).unwrap() = (0>>24) as u8;
-
+        put_u32lit_4(&mut data,pos,0)?;
         self.base_conn.write_pack(data)
     }
     pub fn get_event(&mut self) ->Result<()>{

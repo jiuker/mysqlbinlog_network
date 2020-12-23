@@ -24,7 +24,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="get conn">
       <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/end_dian.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/pkg/end_dian.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +167,7 @@
       <workItem from="1608599349097" duration="29952000" />
       <workItem from="1608685860391" duration="287000" />
       <workItem from="1608686208336" duration="368000" />
-      <workItem from="1608686623664" duration="12408000" />
+      <workItem from="1608686623664" duration="12929000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -225,7 +225,14 @@
       <option name="project" value="LOCAL" />
       <updated>1608705410879</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="get conn">
+      <created>1608705536926</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1608705536926</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -251,6 +258,17 @@
     <MESSAGE value="first import" />
     <MESSAGE value="get conn" />
     <option name="LAST_COMMIT_MESSAGE" value="get conn" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/../mysqlbinlog_network/src/client/conn.rs</url>
+          <line>405</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -4,9 +4,10 @@ use std::ops::Index;
 use std::error::Error;
 use sha1::Sha1;
 use crate::client::pos::Pos;
-use crate::pkg::vec::get_vec;
+use crate::pkg::vec::{get_vec, set_to_vec};
 use crate::pkg::end_dian::{u16lit, u32lit, put_u32lit_4, put_u16lit_2, put_u8lit_1};
 use crate::pkg::err::Result;
+use crate::none;
 
 
 pub struct BaseConn{
@@ -39,10 +40,10 @@ impl BaseConn{
     pub fn write_pack(&mut self, mut data: Vec<u8>) ->Result<()>{
         let length = data.len()-4;
         // header
-        *data.get_mut(0).unwrap() = length as u8;
-        *data.get_mut(1).unwrap() = (length >> 8 as u8) as u8;
-        *data.get_mut(2).unwrap() = (length >> 16 as u8) as u8;
-        *data.get_mut(3).unwrap() = self.sequence as u8;
+        *none!(data.get_mut(0)) = length as u8;
+        *none!(data.get_mut(1)) = (length >> 8 as u8) as u8;
+        *none!(data.get_mut(2)) = (length >> 16 as u8) as u8;
+        *none!(data.get_mut(3)) = self.sequence as u8;
         self.bw.write(data.as_slice())?;
         self.sequence = self.sequence.wrapping_add(1);
         self.bw.flush();
@@ -141,11 +142,11 @@ impl Conn{
 
     fn read_init_hand_shake(&mut self) ->Result<()>{
         let data = self.base_conn.read_packet()?;
-        if *data.get(0).unwrap() == ERR_HEADER{
+        if *none!(data.get(0)) == ERR_HEADER{
             return Err(Box::from("read initial handshake error"));
         }
-        if *data.get(0).unwrap() < MIN_PROTOCOL_VERSION {
-            return Err(Box::from(format!("invalid protocol version {}, must >= 10",*data.get(0).unwrap())));
+        if *none!(data.get(0)) < MIN_PROTOCOL_VERSION {
+            return Err(Box::from(format!("invalid protocol version {}, must >= 10",*none!(data.get(0)))));
         }
         // skip mysql version
         let mut pos = (1+data.index(0x00)+1) as usize;
@@ -174,9 +175,9 @@ impl Conn{
             let _data:Vec<u8> = get_vec(&data,pos,0)?;
             let end = _data.index(0x00);
             if *end> pos as u8 &&*end<= data.len() as u8 {
-                self.auth_plugin_name = String::from_utf8(get_vec(&data, pos, *end as usize)?).unwrap();
+                self.auth_plugin_name = String::from_utf8(get_vec(&data, pos, *end as usize)?)?;
             }else{
-                self.auth_plugin_name = String::from_utf8(get_vec(&data, pos, 0)?).unwrap();
+                self.auth_plugin_name = String::from_utf8(get_vec(&data, pos, 0)?)?;
             }
         }
         if self.auth_plugin_name.is_empty(){
@@ -204,66 +205,52 @@ impl Conn{
         }
 
         let mut data = vec![0u8;length+4];
+        put_u32lit_4(&mut data,4,capability);
 
-        *data.get_mut(4).unwrap() = capability as u8;
-        *data.get_mut(5).unwrap() = (capability >> 8) as u8;
-        *data.get_mut(6).unwrap() = (capability >> 16) as u8;
-        *data.get_mut(7).unwrap() = (capability >> 24) as u8;
+        put_u8lit_1(&mut data,8,0x00);
+        put_u8lit_1(&mut data,9,0x00);
+        put_u8lit_1(&mut data,10,0x00);
+        put_u8lit_1(&mut data,11,0x00);
 
-        *data.get_mut(8).unwrap() = 0x00;
-        *data.get_mut(9).unwrap() = 0x00;
-        *data.get_mut(10).unwrap() = 0x00;
-        *data.get_mut(11).unwrap() = 0x00;
-
-        *data.get_mut(12).unwrap() = DEFAULT_COLLATION_ID;
+        put_u8lit_1(&mut data,12,DEFAULT_COLLATION_ID);
 
 
         // todo tls
 
         let mut pos = 13;
         for _ in pos..pos+23 {
-            *data.get_mut(pos).unwrap() = 0;
+            put_u8lit_1(&mut data,pos,0x00);
             pos+=1;
         }
 
         if !self.user.is_empty(){
-            for b in self.user.bytes(){
-                *data.get_mut(pos).unwrap() = b;
-                pos+=1;
-            }
+            pos+=set_to_vec(&mut data,pos,self.user.as_bytes().to_vec())?;
         }
-        *data.get_mut(pos).unwrap() = 0x00;
+        put_u8lit_1(&mut data,pos,0x00);
         pos+=1;
 
-        for b in auth_resp_lei.iter(){
-            *data.get_mut(pos).unwrap() = *b;
-            pos+=1;
-        }
 
-        for b in auth.iter(){
-            *data.get_mut(pos).unwrap() = *b;
-            pos+=1;
-        }
+        pos+=set_to_vec(&mut data,pos,auth_resp_lei)?;
+
+        pos+=set_to_vec(&mut data,pos,auth)?;
+
+
 
         if add_null {
-            *data.get_mut(pos).unwrap() = 0x00;
+            put_u8lit_1(&mut data,pos,0x00);
             pos+=1;
         }
 
         if !self.db.is_empty(){
-            for b in self.db.bytes(){
-                *data.get_mut(pos).unwrap() = b;
-                pos+=1;
-            }
-            *data.get_mut(pos).unwrap() = 0x00;
+
+            pos+=set_to_vec(&mut data,pos,self.db.as_bytes().to_vec())?;
+
+            put_u8lit_1(&mut data,pos,0x00);
             pos+=1;
         }
 
-        for b in self.auth_plugin_name.bytes(){
-            *data.get_mut(pos).unwrap() = b;
-            pos+=1;
-        }
-        *data.get_mut(pos).unwrap() = 0x00;
+        pos+=set_to_vec(&mut data,pos,self.auth_plugin_name.as_bytes().to_vec())?;
+        put_u8lit_1(&mut data,pos,0x00);
         self.base_conn.write_pack(data);
         Ok(())
     }
@@ -284,8 +271,8 @@ impl Conn{
         };
     }
     fn read_auth_result(&mut self) ->Result<(Vec<u8>,String)>{
-        let data = self.base_conn.read_packet().unwrap();
-        match *data.get(0).unwrap(){
+        let data = self.base_conn.read_packet()?;
+        match *none!(data.get(0)){
             OK_HEADER=>{
                 return Ok((vec![],"".to_string()))
             }
@@ -319,12 +306,8 @@ impl Conn{
         let mut length = cmd.bytes().len() + 1;
         let mut data = vec![0; length + 4];
         // Query Type
-        *data.get_mut(4).unwrap() = 3;
-        let mut i =5;
-        for b in cmd.bytes(){
-            *data.get_mut(i).unwrap() = b;
-            i+=1;
-        }
+        *none!(data.get_mut(4)) = 3;
+        set_to_vec(&mut data,5,cmd.into_bytes())?;
         self.base_conn.write_pack(data)?;
         Ok(())
     }
@@ -348,7 +331,7 @@ impl Conn{
             pos.pos = 4;
         };
         self.prepare();
-        self.write_binlog_dump_command(pos).unwrap();
+        self.write_binlog_dump_command(pos)?;
         Ok(())
     }
     fn prepare(&mut self)->Result<()>{
@@ -356,43 +339,33 @@ impl Conn{
         Ok(())
     }
     fn register_slave(&mut self) ->Result<()>{
-        self.execute("SHOW GLOBAL VARIABLES LIKE 'BINLOG_CHECKSUM'".to_string(),6).unwrap();
-        self.execute("SET @master_binlog_checksum='NONE';".to_string(),1).unwrap();
-        self.write_register_slave_command().unwrap();
+        self.execute("SHOW GLOBAL VARIABLES LIKE 'BINLOG_CHECKSUM'".to_string(),6)?;
+        self.execute("SET @master_binlog_checksum='NONE';".to_string(),1)?;
+        self.write_register_slave_command()?;
         let rsl = self.base_conn.read_packet()?;
         dbg!(rsl);
-        self.execute("SHOW VARIABLES LIKE 'rpl_semi_sync_master_enabled';".to_string(),5).unwrap();
-        self.execute("SET @rpl_semi_sync_slave = 1;".to_string(),1).unwrap();
+        self.execute("SHOW VARIABLES LIKE 'rpl_semi_sync_master_enabled';".to_string(),5)?;
+        self.execute("SET @rpl_semi_sync_slave = 1;".to_string(),1)?;
         Ok(())
     }
     fn write_binlog_dump_command(&mut self, pos_args:Pos) ->Result<()>{
         self.base_conn.reset_sequence();
         let mut data = vec![0; 4+1+4+2+4+pos_args.name.len()];
         let mut pos = 4;
-        *data.get_mut(pos).unwrap() = 18;
+        put_u8lit_1(&mut data,pos,18);
         pos+=1;
 
-        *data.get_mut(pos).unwrap() = pos_args.pos as u8;
-        *data.get_mut(pos+1).unwrap() = (pos_args.pos>>8) as u8;
-        *data.get_mut(pos+2).unwrap() = (pos_args.pos>>16) as u8;
-        *data.get_mut(pos+3).unwrap() = (pos_args.pos>>24) as u8;
+        put_u32lit_4(&mut data,pos,pos_args.pos);
         pos += 4;
 
-        *data.get_mut(pos).unwrap() = 0 as u8;
-        *data.get_mut(pos+1).unwrap() = (0>>8) as u8;
+        put_u16lit_2(&mut data,pos,0);
         pos += 2;
 
-        *data.get_mut(pos).unwrap() = self.server_id as u8;
-        *data.get_mut(pos+1).unwrap() = (self.server_id>>8) as u8;
-        *data.get_mut(pos+2).unwrap() = (self.server_id>>16) as u8;
-        *data.get_mut(pos+3).unwrap() = (self.server_id>>24) as u8;
+        put_u32lit_4(&mut data,pos,self.server_id);
         pos += 4;
 
-        let mut i = 0;
-        for b in pos_args.name.bytes(){
-            *data.get_mut(pos+i).unwrap() = b;
-            i+=1;
-        };
+        set_to_vec(&mut data,pos,pos_args.name.into_bytes())?;
+
         self.base_conn.write_pack(data)
     }
     fn write_register_slave_command(&mut self) ->Result<()>{
@@ -410,32 +383,20 @@ impl Conn{
 
         put_u8lit_1(&mut data,pos,h_name.len() as u8)?;
         pos+=1;
-        let mut i =0;
-        for b in h_name.bytes(){
-            *data.get_mut(pos+i).unwrap() =b;
-            i+=1;
-        };
-        pos += h_name.bytes().len();
+
+        pos += set_to_vec(&mut data,pos,h_name.into_bytes())?;
 
         put_u8lit_1(&mut data,pos,self.user.len() as u8)?;
         pos+=1;
 
-        let mut i =0;
-        for b in self.user.bytes(){
-            *data.get_mut(pos+i).unwrap() =b;
-            i+=1;
-        };
-        pos += self.user.bytes().len();
+        pos += set_to_vec(&mut data,pos,self.user.as_bytes().to_vec())?;
+
 
         put_u8lit_1(&mut data,pos,self.password.len() as u8)?;
         pos+=1;
 
-        let mut i =0;
-        for b in self.password.bytes(){
-            *data.get_mut(pos+i).unwrap() =b;
-            i+=1;
-        };
-        pos += self.password.bytes().len();
+        pos += set_to_vec(&mut data,pos,self.password.as_bytes().to_vec())?;
+
 
         put_u16lit_2(&mut data,pos,self.port)?;
         pos += 2;
@@ -449,14 +410,14 @@ impl Conn{
         loop{
             let rsl = match self.base_conn.read_packet(){
                 Ok(data)=>{
-                    match *data.get(0).unwrap() {
+                    match *none!(data.get(0)) {
                         OK_HEADER=>{
                             // success
                             // skip success
                             let mut data = get_vec(&data,1,0)?;
                             let mut need_ack = false;
-                            if *data.get(0).unwrap()==SemiSyncIndicator{
-                                need_ack = *data.get(1).unwrap() == 0x01;
+                            if *none!(data.get(0))==SemiSyncIndicator{
+                                need_ack = *none!(data.get(1)) == 0x01;
                                 data = get_vec(&data,2,0)?;
                             }
                             data

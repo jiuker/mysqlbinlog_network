@@ -32,7 +32,7 @@ macro_rules! base_put_u {
         pub fn $fun_name(b: &mut Vec<u8>,pos:usize,v:$type)->Result<()>{
             let mut index = 0;
             while index < $add_max_count {
-                *none!(b.get_mut(index+pos)) = (v << 8*index) as u8;
+                *none!(b.get_mut(index+pos)) = (v >> 8*index) as u8;
                 index = index + 1;
             };
             Ok(())
@@ -40,7 +40,7 @@ macro_rules! base_put_u {
         pub fn $fun_name_big(b: &mut Vec<u8>,pos:usize,v:$type)->Result<()>  {
             let mut index = 0;
             while index < $add_max_count {
-                *none!(b.get_mut($add_max_count-1-index+pos)) = (v << 8*index) as u8;
+                *none!(b.get_mut($add_max_count-1-index+pos)) = (v >> 8*index) as u8;
                 index = index + 1;
             };
             Ok(())

@@ -37,7 +37,7 @@ impl BaseConn{
         self.br.read_exact(&mut buf)?;
         Ok(buf)
     }
-    pub fn write_pack(&mut self, mut data: Vec<u8>) ->Result<()>{
+    pub fn write_pack(&mut self, data: &mut Vec<u8>) ->Result<()>{
         let length = data.len()-4;
         // header
         *none!(data.get_mut(0)) = length as u8;
@@ -251,7 +251,7 @@ impl Conn{
 
         pos+=set_to_vec(&mut data,pos,self.auth_plugin_name.as_bytes())?;
         put_u8lit_1(&mut data,pos,0x00);
-        self.base_conn.write_pack(data);
+        self.base_conn.write_pack(&mut data);
         Ok(())
     }
     fn gen_auth_response(&mut self, auth_data:Vec<u8>) ->Result<(Vec<u8>, bool)>{
@@ -308,7 +308,7 @@ impl Conn{
         // Query Type
         *none!(data.get_mut(4)) = 3;
         set_to_vec(&mut data,5,cmd.as_bytes())?;
-        self.base_conn.write_pack(data)?;
+        self.base_conn.write_pack(&mut data)?;
         Ok(())
     }
     pub fn execute(&mut self, cmd:String, ignore:i32) ->Result<()>{
@@ -366,7 +366,7 @@ impl Conn{
 
         set_to_vec(&mut data,pos,pos_args.name.as_bytes())?;
 
-        self.base_conn.write_pack(data)
+        self.base_conn.write_pack(&mut data)
     }
     fn write_register_slave_command(&mut self) ->Result<()>{
         self.base_conn.reset_sequence();
@@ -404,7 +404,7 @@ impl Conn{
 
         pos += 4;
         put_u32lit_4(&mut data,pos,0)?;
-        self.base_conn.write_pack(data)
+        self.base_conn.write_pack(&mut data)
     }
     pub fn get_event(&mut self) ->Result<()>{
         loop{

@@ -1,6 +1,6 @@
 use std::io::{BufReader, BufWriter, Read, Write};
 use std::net::TcpStream;
-use std::ops::Index;
+use std::ops::{Index, Deref, DerefMut};
 use std::error::Error;
 use sha1::Sha1;
 use crate::client::pos::Pos;
@@ -68,6 +68,20 @@ pub struct Conn{
     server_id:u32,
     port:u16,
 }
+
+impl Deref for Conn{
+    type Target = BaseConn;
+    fn deref(&self) -> &BaseConn {
+        &self.base_conn
+    }
+}
+
+impl DerefMut for Conn{
+    fn deref_mut(&mut self)->&mut BaseConn{
+        &mut self.base_conn
+    }
+}
+
 const MIN_PROTOCOL_VERSION:u8  = 10;
 
 const CLIENT_LONG_PASSWORD:u32 = 1<<0;
@@ -141,7 +155,7 @@ impl Conn{
     }
 
     fn read_init_hand_shake(&mut self) ->Result<()>{
-        let data = self.base_conn.read_packet()?;
+        let data = self.read_packet()?;
         if *none!(data.get(0)) == ERR_HEADER{
             return Err(Box::from("read initial handshake error"));
         }
@@ -251,7 +265,7 @@ impl Conn{
 
         pos+=set_to_vec(&mut data,pos,self.auth_plugin_name.as_bytes())?;
         put_u8lit_1(&mut data,pos,0x00);
-        self.base_conn.write_pack(&mut data);
+        self.write_pack(&mut data);
         Ok(())
     }
     fn gen_auth_response(&mut self, auth_data:Vec<u8>) ->Result<(Vec<u8>, bool)>{
@@ -271,7 +285,7 @@ impl Conn{
         };
     }
     fn read_auth_result(&mut self) ->Result<(Vec<u8>,String)>{
-        let data = self.base_conn.read_packet()?;
+        let data = self.read_packet()?;
         match *none!(data.get(0)){
             OK_HEADER=>{
                 return Ok((vec![],"".to_string()))
@@ -308,15 +322,15 @@ impl Conn{
         // Query Type
         *none!(data.get_mut(4)) = 3;
         set_to_vec(&mut data,5,cmd.as_bytes())?;
-        self.base_conn.write_pack(&mut data)?;
+        self.write_pack(&mut data)?;
         Ok(())
     }
     pub fn execute(&mut self, cmd:String, ignore:i32) ->Result<()>{
-        self.base_conn.reset_sequence();
+        self.reset_sequence();
         self.exec(cmd)?;
         let mut count = 0;
         while count < ignore {
-            let rsl = self.base_conn.read_packet()?;
+            let rsl = self.read_packet()?;
             count+=1;
             dbg!(count);
         }
@@ -342,14 +356,14 @@ impl Conn{
         self.execute("SHOW GLOBAL VARIABLES LIKE 'BINLOG_CHECKSUM'".to_string(),6)?;
         self.execute("SET @master_binlog_checksum='NONE';".to_string(),1)?;
         self.write_register_slave_command()?;
-        let rsl = self.base_conn.read_packet()?;
+        let rsl = self.read_packet()?;
         dbg!(rsl);
         self.execute("SHOW VARIABLES LIKE 'rpl_semi_sync_master_enabled';".to_string(),5)?;
         self.execute("SET @rpl_semi_sync_slave = 1;".to_string(),1)?;
         Ok(())
     }
     fn write_binlog_dump_command(&mut self, pos_args:Pos) ->Result<()>{
-        self.base_conn.reset_sequence();
+        self.reset_sequence();
         let mut data = vec![0; 4+1+4+2+4+pos_args.name.len()];
         let mut pos = 4;
         put_u8lit_1(&mut data,pos,18);
@@ -366,10 +380,10 @@ impl Conn{
 
         set_to_vec(&mut data,pos,pos_args.name.as_bytes())?;
 
-        self.base_conn.write_pack(&mut data)
+        self.write_pack(&mut data)
     }
     fn write_register_slave_command(&mut self) ->Result<()>{
-        self.base_conn.reset_sequence();
+        self.reset_sequence();
         let h_name =  sys_info::hostname()?;
         let mut data = vec![0; 4+1+4+1+h_name.bytes().len()+1+self.user.len()+1+self.password.len()+2+4+4];
         let mut pos = 4;
@@ -404,11 +418,11 @@ impl Conn{
 
         pos += 4;
         put_u32lit_4(&mut data,pos,0)?;
-        self.base_conn.write_pack(&mut data)
+        self.write_pack(&mut data)
     }
     pub fn get_event(&mut self) ->Result<()>{
         loop{
-            let rsl = match self.base_conn.read_packet(){
+            let rsl = match self.read_packet(){
                 Ok(data)=>{
                     match *none!(data.get(0)) {
                         OK_HEADER=>{

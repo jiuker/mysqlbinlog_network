@@ -224,15 +224,15 @@ impl Conn{
         }
 
         if !self.user.is_empty(){
-            pos+=set_to_vec(&mut data,pos,self.user.as_bytes().to_vec())?;
+            pos+=set_to_vec(&mut data,pos,self.user.as_bytes())?;
         }
         put_u8lit_1(&mut data,pos,0x00);
         pos+=1;
 
 
-        pos+=set_to_vec(&mut data,pos,auth_resp_lei)?;
+        pos+=set_to_vec(&mut data,pos,auth_resp_lei.as_slice())?;
 
-        pos+=set_to_vec(&mut data,pos,auth)?;
+        pos+=set_to_vec(&mut data,pos,auth.as_slice())?;
 
 
 
@@ -243,13 +243,13 @@ impl Conn{
 
         if !self.db.is_empty(){
 
-            pos+=set_to_vec(&mut data,pos,self.db.as_bytes().to_vec())?;
+            pos+=set_to_vec(&mut data,pos,self.db.as_bytes())?;
 
             put_u8lit_1(&mut data,pos,0x00);
             pos+=1;
         }
 
-        pos+=set_to_vec(&mut data,pos,self.auth_plugin_name.as_bytes().to_vec())?;
+        pos+=set_to_vec(&mut data,pos,self.auth_plugin_name.as_bytes())?;
         put_u8lit_1(&mut data,pos,0x00);
         self.base_conn.write_pack(data);
         Ok(())
@@ -307,7 +307,7 @@ impl Conn{
         let mut data = vec![0; length + 4];
         // Query Type
         *none!(data.get_mut(4)) = 3;
-        set_to_vec(&mut data,5,cmd.into_bytes())?;
+        set_to_vec(&mut data,5,cmd.as_bytes())?;
         self.base_conn.write_pack(data)?;
         Ok(())
     }
@@ -364,7 +364,7 @@ impl Conn{
         put_u32lit_4(&mut data,pos,self.server_id);
         pos += 4;
 
-        set_to_vec(&mut data,pos,pos_args.name.into_bytes())?;
+        set_to_vec(&mut data,pos,pos_args.name.as_bytes())?;
 
         self.base_conn.write_pack(data)
     }
@@ -384,18 +384,18 @@ impl Conn{
         put_u8lit_1(&mut data,pos,h_name.len() as u8)?;
         pos+=1;
 
-        pos += set_to_vec(&mut data,pos,h_name.into_bytes())?;
+        pos += set_to_vec(&mut data,pos,h_name.as_bytes())?;
 
         put_u8lit_1(&mut data,pos,self.user.len() as u8)?;
         pos+=1;
 
-        pos += set_to_vec(&mut data,pos,self.user.as_bytes().to_vec())?;
+        pos += set_to_vec(&mut data,pos,self.user.as_bytes())?;
 
 
         put_u8lit_1(&mut data,pos,self.password.len() as u8)?;
         pos+=1;
 
-        pos += set_to_vec(&mut data,pos,self.password.as_bytes().to_vec())?;
+        pos += set_to_vec(&mut data,pos,self.password.as_bytes())?;
 
 
         put_u16lit_2(&mut data,pos,self.port)?;

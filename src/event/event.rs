@@ -41,7 +41,7 @@ impl <T:Write+Sized> Event<T> for FormatDescriptionEvent {
         pos+=2;
 
         self.server_version = vec![0;50];
-        set_to_vec(&mut self.server_version,pos,data.clone());
+        set_to_vec(&mut self.server_version,pos,data.as_slice());
         pos+=50;
 
         self.create_timestamp = u32lit(get_vec(&data,pos,0)?.as_slice());

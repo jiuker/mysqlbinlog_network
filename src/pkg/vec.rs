@@ -16,7 +16,7 @@ pub fn get_vec(data:&Vec<u8>,start:usize,offset:usize)->Result<Vec<u8>> {
     }
     Ok(rsl)
 }
-pub fn set_to_vec(data:&mut Vec<u8>,pos:usize,p_data:Vec<u8>)->Result<usize> {
+pub fn set_to_vec(data:&mut Vec<u8>,pos:usize,p_data:&[u8])->Result<usize> {
     let mut i =0;
     for b in p_data.iter(){
         *none!(data.get_mut(pos+i)) = *b;

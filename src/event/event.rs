@@ -1,7 +1,7 @@
 use std::io::{ BufWriter, Write};
 use std::error::Error;
 use crate::pkg::end_dian::{u16lit, u32lit, u64lit};
-use crate::pkg::vec::{get_vec, set_to_vec};
+use crate::pkg::vec::{set_to_vec};
 use crate::pkg::err::Result;
 use crate::none;
 
@@ -37,14 +37,14 @@ impl <T:Write+Sized> Event<T> for FormatDescriptionEvent {
 
     fn decode(&mut self,data: Vec<u8>) -> Result<()> {
         let mut pos = 0;
-        self.version = u16lit(get_vec(&data,pos,0)?.as_slice());
+        self.version = u16lit(&data[pos..]);
         pos+=2;
 
         self.server_version = vec![0;50];
         set_to_vec(&mut self.server_version,pos,data.as_slice());
         pos+=50;
 
-        self.create_timestamp = u32lit(get_vec(&data,pos,0)?.as_slice());
+        self.create_timestamp = u32lit(&data[pos..]);
         pos+4;
 
         self.event_header_length = *none!(data.get(pos));
@@ -63,10 +63,10 @@ impl <T:Write+Sized> Event<T> for FormatDescriptionEvent {
 
         if calc_version_product(String::from_utf8(self.server_version.clone())?) >= checksum_product{
             self.checksum_algorithm = *none!(data.get(data.len()-5));
-            self.event_type_header_lengths = get_vec(&data,pos,data.len()-5)?;
+            self.event_type_header_lengths = data[pos..data.len() - 5].to_owned();
         }else{
             self.checksum_algorithm = BINLOG_CHECKSUM_ALG_UNDEF;
-            self.event_type_header_lengths = get_vec(&data,pos,0)?;
+            self.event_type_header_lengths = data[pos..].to_owned();
         }
         Ok(())
     }
@@ -112,7 +112,7 @@ impl <T:Write+Sized> Event<T> for RotateEvent {
 
     fn decode(&mut self, data: Vec<u8>) -> Result<()> {
         self.position = u64lit(data.as_slice());
-        self.next_log_name = get_vec(&data,8,0)?;
+        self.next_log_name = data[8..].to_vec();
         Ok(())
     }
 }

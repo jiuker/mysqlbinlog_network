@@ -2,7 +2,6 @@ use crate::event::event::Event;
 use std::io::{Write, BufWriter};
 use crate::pkg::err::Result;
 use crate::pkg::end_dian::u64lit;
-use crate::pkg::vec::get_vec;
 
 pub struct RowsQueryEvent {
     query:Vec<u8>,
@@ -14,7 +13,7 @@ impl <T:Write+Sized> Event<T> for RowsQueryEvent {
     }
 
     fn decode(&mut self, data: Vec<u8>) -> Result<()> {
-        self.query = get_vec(&data,1,0)?;
+        self.query = data[1..].to_vec();
         Ok(())
     }
 }

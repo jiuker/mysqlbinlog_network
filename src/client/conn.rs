@@ -4,7 +4,7 @@ use std::ops::{Index, Deref, DerefMut};
 use std::error::Error;
 use sha1::Sha1;
 use crate::client::pos::Pos;
-use crate::pkg::vec::{get_vec, set_to_vec};
+use crate::pkg::vec::{set_to_vec};
 use crate::pkg::end_dian::{u16lit, u32lit, put_u32lit_4, put_u16lit_2, put_u8lit_1};
 use crate::pkg::err::Result;
 use crate::none;
@@ -164,11 +164,11 @@ impl Conn{
         }
         // skip mysql version
         let mut pos = (1+data.index(0x00)+1) as usize;
-        self.connection_id = u32lit(get_vec(&data, pos, 4)?.as_slice());
+        self.connection_id = u32lit(&data[pos..pos+4]);
         pos+=4;
-        self.salt.append(&mut get_vec(&data, pos, 8)?);
+        self.salt.append(&mut data[pos..pos+8].to_vec());
         pos += 8 + 1;
-        self.capability = u16lit(get_vec(&data, pos, 2)?.as_slice()) as u32;
+        self.capability = u16lit(&data[pos..pos+2]) as u32;
         if self.capability&CLIENT_PROTOCOL_41 ==0{
             return Err(Box::from("the MySQL server can not support protocol 41 and above required by the client"));
         }
@@ -179,19 +179,19 @@ impl Conn{
         pos += 2;
         if data.len()> pos as usize {
             pos+=1;
-            self.status = u16lit(get_vec(&data, pos, 2)?.as_slice());
+            self.status = u16lit(&data[pos..pos+2]);
             pos += 2;
-            self.capability = (((u16lit(get_vec(&data, pos, 2)?.as_slice()) as u32) << 16 as u32)as u32| self.capability) as u32;
+            self.capability = (((u16lit(&data[pos..pos+2]) as u32) << 16 as u32)as u32| self.capability) as u32;
             pos += 2;
             pos += 10 + 1;
-            self.salt.append(&mut get_vec(&data, pos, 12)?);
+            self.salt.append(&mut data[pos..pos+12].to_vec());
             pos += 13;
-            let _data:Vec<u8> = get_vec(&data,pos,0)?;
+            let _data:Vec<u8> = data[pos..].to_vec();
             let end = _data.index(0x00);
             if *end> pos as u8 &&*end<= data.len() as u8 {
-                self.auth_plugin_name = String::from_utf8(get_vec(&data, pos, *end as usize)?)?;
+                self.auth_plugin_name = String::from_utf8(data[pos..(*end as usize)+pos].to_vec())?;
             }else{
-                self.auth_plugin_name = String::from_utf8(get_vec(&data, pos, 0)?)?;
+                self.auth_plugin_name = String::from_utf8(data[pos..data.len()-1].to_vec())?;
             }
         }
         if self.auth_plugin_name.is_empty(){
@@ -271,7 +271,7 @@ impl Conn{
     fn gen_auth_response(&mut self, auth_data:Vec<u8>) ->Result<(Vec<u8>, bool)>{
         return match self.auth_plugin_name.as_str() {
             AUTH_NATIVE_PASSWORD => {
-                Ok((calc_password(get_vec(&auth_data, 0, 20)?, self.password.as_bytes().to_vec()), false, ))
+                Ok((calc_password(&mut auth_data[0..20].to_vec(), self.password.as_bytes().to_vec()), false, ))
             },
             AUTH_CACHING_SHA2_PASSWORD => {
                 Ok((calc_caching_sha2password(auth_data, self.password.as_bytes().to_vec()), false, ))
@@ -291,7 +291,7 @@ impl Conn{
                 return Ok((vec![],"".to_string()))
             }
             MORE_DATE_HEADER=>{
-                return Ok((get_vec(&data, 1, 0)?,"".to_string()))
+                return Ok((data[1..].to_vec(),"".to_string()))
             }
             EOF_HEADER=>{
 
@@ -304,16 +304,16 @@ impl Conn{
     }
     fn handle_error_packet(&mut self, data:Vec<u8>) ->Result<()>{
         let mut pos =1;
-        let code = u16lit(get_vec(&data, pos, 0)?.as_slice());
+        let code = u16lit(&data[pos..]);
         pos += 2;
         let mut state = "".to_string();
         if self.capability&CLIENT_PROTOCOL_41 > 0 {
             //skip '#'
             pos+=1;
-            state = String::from_utf8(get_vec(&data, pos, 5)?)?;
+            state = String::from_utf8(data[pos..pos+5].to_vec())?;
             pos += 5;
         };
-        let message = String::from_utf8(get_vec(&data, pos, 0)?)?;
+        let message = String::from_utf8(data[pos..].to_vec())?;
         Err(Box::from(format!("[{}][{}]:{}", code,state, message)))
     }
     fn exec(&mut self,cmd:String)->Result<()>{
@@ -428,11 +428,11 @@ impl Conn{
                         OK_HEADER=>{
                             // success
                             // skip success
-                            let mut data = get_vec(&data,1,0)?;
+                            let mut data = data[1..].to_vec();
                             let mut need_ack = false;
                             if *none!(data.get(0))==SemiSyncIndicator{
                                 need_ack = *none!(data.get(1)) == 0x01;
-                                data = get_vec(&data,2,0)?;
+                                data = data[2..].to_vec();
                             }
                             data
                         }
@@ -450,7 +450,7 @@ impl Conn{
         };
     }
 }
-fn calc_password(scramble:Vec<u8>, password:Vec<u8>) ->Vec<u8>{
+fn calc_password(scramble:&mut Vec<u8>, password:Vec<u8>) ->Vec<u8>{
     if password.is_empty(){
         return vec![];
     }

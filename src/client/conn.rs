@@ -336,11 +336,11 @@ impl Conn{
         }
         Ok(())
     }
-    pub fn start_sync(&mut self, pos:Pos) ->Result<()>{
+    pub fn start_sync(&mut self, pos:&mut Pos) ->Result<()>{
         self.prepare_sync_pos(pos);
         Ok(())
     }
-    fn prepare_sync_pos(&mut self, mut pos:Pos) ->Result<()>{
+    fn prepare_sync_pos(&mut self, mut pos:&mut Pos) ->Result<()>{
         if pos.pos<4 {
             pos.pos = 4;
         };
@@ -362,7 +362,7 @@ impl Conn{
         self.execute("SET @rpl_semi_sync_slave = 1;".to_string(),1)?;
         Ok(())
     }
-    fn write_binlog_dump_command(&mut self, pos_args:Pos) ->Result<()>{
+    fn write_binlog_dump_command(&mut self, pos_args:&Pos) ->Result<()>{
         self.reset_sequence();
         let mut data = vec![0; 4+1+4+2+4+pos_args.name.len()];
         let mut pos = 4;

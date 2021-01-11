@@ -61,7 +61,7 @@ impl <T:Write+Sized> Event<T> for FormatDescriptionEvent {
             checksum_product = CHECKSUM_VERSION_PRODUCT_MARIA_DB;
         }
 
-        if calc_version_product(String::from_utf8(self.server_version.clone())?) >= checksum_product{
+        if calc_version_product(String::from_utf8(self.server_version.clone())?)? >= checksum_product{
             self.checksum_algorithm = *none!(data.get(data.len()-5));
             self.event_type_header_lengths = data[pos..data.len() - 5].to_owned();
         }else{
@@ -71,7 +71,7 @@ impl <T:Write+Sized> Event<T> for FormatDescriptionEvent {
         Ok(())
     }
 }
-fn calc_version_product(server:String)->i32{
+fn calc_version_product(server:String)->Result<i32>{
     let mut rsl = 0;
     let mut i =0;
     for s in server.split("."){
@@ -84,19 +84,19 @@ fn calc_version_product(server:String)->i32{
                     break;
                 }
             }
-            rsl = rsl*256+s_.parse::<i32>().unwrap();
+            rsl = rsl*256+s_.parse::<i32>()?;
         }else{
-            rsl = rsl*256+s.parse::<i32>().unwrap();
+            rsl = rsl*256+s.parse::<i32>()?;
         }
         i+=1;
     };
-    rsl
+    Ok(rsl)
 }
 
 #[test]
 fn test_calc_version_product(){
-    assert_eq!(CHECKSUM_VERSION_PRODUCT_MYSQL, calc_version_product("5.6.1log".to_string()));
-    assert_eq!(CHECKSUM_VERSION_PRODUCT_MARIA_DB, calc_version_product("5.3.0log".to_string()));
+    assert_eq!(CHECKSUM_VERSION_PRODUCT_MYSQL, calc_version_product("5.6.1log".to_string()).unwrap());
+    assert_eq!(CHECKSUM_VERSION_PRODUCT_MARIA_DB, calc_version_product("5.3.0log".to_string()).unwrap());
 }
 
 pub struct RotateEvent {

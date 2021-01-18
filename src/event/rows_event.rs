@@ -1,7 +1,8 @@
 use crate::event::event::Event;
-use crate::pkg::end_dian::{u16big, u16lit, u32big, u64big, u64lit};
+use crate::pkg::end_dian::{u16big, u16lit, u32big, u32lit, u64big, u64lit};
 use crate::pkg::err::Result;
 use crate::pkg::vec::set_to_vec;
+use std::collections::HashMap;
 use std::fs::read;
 use std::io::{BufWriter, Write};
 
@@ -126,7 +127,7 @@ impl<T: Write + Sized> Event<T> for TableMapEvent {
 
     fn decode(&mut self, data: Vec<u8>) -> Result<()> {
         let mut pos = 0;
-        self.table_id = fixed_length_int(Vec::from(&data[0..self.table_idsize]));
+        self.table_id = fixed_length_int(&data[0..self.table_idsize]);
         pos += self.table_idsize;
         self.flags = u16lit(&data[pos..]);
 
@@ -157,7 +158,7 @@ impl<T: Write + Sized> Event<T> for TableMapEvent {
 
         pos += n as usize;
 
-        let null_bitmap_size = bitmapByteSize(self.column_count);
+        let null_bitmap_size = bitmap_byte_size(self.column_count);
         if data[pos..].len() < null_bitmap_size as usize {
             return Err(Box::from("io.EOF"));
         }
@@ -214,7 +215,7 @@ impl TableMapEvent {
         Ok(())
     }
 }
-pub fn fixed_length_int(buf: Vec<u8>) -> u64 {
+pub fn fixed_length_int(buf: &[u8]) -> u64 {
     let mut num = 0;
     let mut i = 0;
     for b in buf.iter() {
@@ -250,6 +251,58 @@ pub fn length_encoded_string(b: &[u8]) -> Result<(Vec<u8>, bool, i32)> {
     return Err(Box::from("io.Error"));
 }
 
-pub fn bitmapByteSize(column_count: u64) -> u64 {
+pub fn bitmap_byte_size(column_count: u64) -> u64 {
     return (column_count + 7) as u64 / 8;
+}
+pub enum RowsEventRowType {
+    I64(i64),
+    F64(f64),
+    Bool(bool),
+    VecByte(Vec<u8>),
+    Str(String),
+}
+pub struct RowsEvent {
+    version: i32,
+    table_idsize: i32,
+    tables: HashMap<String, TableMapEvent>,
+    need_bitmap2: bool,
+    table: Option<TableMapEvent>,
+    table_id: u64,
+    flags: u16,
+    //if version == 2
+    extra_data: Vec<u8>,
+    //lenenc_int
+    column_count: u64,
+    //len = (column_count + 7) / 8
+    column_bitmap1: Vec<u8>,
+    //if UPDATE_ROWS_EVENTv1 or v2
+    //len = (column_count + 7) / 8
+    column_bitmap2: Vec<u8>,
+    //rows: invalid: int64, float64, bool, []byte, string
+    // Rows [][]interface{}
+    Rows: Vec<Vec<RowsEventRowType>>,
+    parse_time: bool,
+    use_decimal: bool,
+    ignore_jsondecode_err: bool,
+}
+impl<T: Write + Sized> Event<T> for RowsEvent {
+    fn dump(&self, w: BufWriter<T>) {}
+
+    fn decode(&mut self, data: Vec<u8>) -> Result<()> {
+        let mut pos = 0;
+        self.table_id = fixed_length_int(&data[0..self.table_idsize as usize]);
+        pos += self.table_idsize as usize;
+
+        self.flags = u16lit(&data[pos..]);
+        pos += 2;
+
+        if self.version == 2 {
+            let dataLen = u16lit(&data[pos..]) as usize;
+            pos += 2;
+            self.extra_data = data[pos..pos + dataLen - 2].to_owned();
+            pos += dataLen - 2;
+        }
+
+        Ok(())
+    }
 }

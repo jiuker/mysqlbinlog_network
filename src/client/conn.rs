@@ -444,30 +444,14 @@ impl Conn {
         loop {
             let rsl = match self.read_packet() {
                 Ok(data) => {
-                    match *none!(data.get(0)) {
-                        OK_HEADER => {
-                            // success
-                            // skip success
-                            let mut data = data[1..].to_vec();
-                            let mut need_ack = false;
-                            if *none!(data.get(0)) == SemiSyncIndicator {
-                                need_ack = *none!(data.get(1)) == 0x01;
-                                data = data[2..].to_vec();
-                            }
-                            data
-                        }
-                        _ => {
-                            // error
-                            vec![]
-                        }
-                    }
+                    println!("{:?}", data)
                 }
                 Err(e) => {
                     continue;
                 }
             };
-            dbg!(rsl.len());
         }
+        Ok(())
     }
 }
 fn calc_password(scramble: &mut Vec<u8>, password: Vec<u8>) -> Vec<u8> {

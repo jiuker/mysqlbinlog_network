@@ -23,16 +23,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="good">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.cargo-ok" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.cargo_vcs_info.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/CHANGELOG.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.toml.orig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/LICENSE.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/examples/print_file.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/test_data/bin-log.000001" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -402,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624531661873</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="good">
+      <created>1624531778182</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1624531778182</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

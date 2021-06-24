@@ -21,34 +21,18 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="整不动了">
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/.cargo-ok" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/.cargo_vcs_info.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/CHANGELOG.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.toml.orig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/LICENSE.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/examples/print_file.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/binlog_file.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/bit_set.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/errors.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/event.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/jsonb.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/table_map.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/tell.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/value.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/test_data/bin-log.000001" afterDir="false" />
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="good">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/conn.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.cargo-ok" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.cargo_vcs_info.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/.travis.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/CHANGELOG.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.toml.orig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/LICENSE.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/examples/print_file.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/test_data/bin-log.000001" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +395,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624517038749</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="good">
+      <created>1624531661873</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1624531661873</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -437,7 +428,8 @@
     <MESSAGE value="first import" />
     <MESSAGE value="get conn" />
     <MESSAGE value="整不动了" />
-    <option name="LAST_COMMIT_MESSAGE" value="整不动了" />
+    <MESSAGE value="good" />
+    <option name="LAST_COMMIT_MESSAGE" value="good" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

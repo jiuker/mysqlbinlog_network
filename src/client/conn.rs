@@ -3,11 +3,14 @@ use crate::none;
 use crate::pkg::end_dian::{put_u16lit_2, put_u32lit_4, put_u8lit_1, u16lit, u32lit};
 use crate::pkg::err::Result;
 use crate::pkg::vec::set_to_vec;
+use mysql_binlog::table_map::TableMap;
+use pipe::{PipeReader, PipeWriter};
 use sha1::Sha1;
 use std::error::Error;
 use std::io::{BufReader, BufWriter, Read, Write};
 use std::net::TcpStream;
 use std::ops::{Deref, DerefMut, Index};
+use std::thread::spawn;
 
 pub struct BaseConn {
     br: BufReader<TcpStream>,
@@ -441,10 +444,80 @@ impl Conn {
         self.write_pack(&mut data)
     }
     pub fn get_event(&mut self) -> Result<()> {
+        let mut table_map = TableMap::new();
         loop {
             let rsl = match self.read_packet() {
                 Ok(data) => {
-                    println!("{:?}", data)
+                    let mut data = data.as_slice();
+                    // println!("{:?}", data);
+                    let typ = mysql_binlog::event::TypeCode::from_byte(*data.get(5).unwrap());
+                    println!("before:    {:?}", typ);
+                    match typ {
+                        mysql_binlog::event::TypeCode::XidEvent => {
+                            let event = mysql_binlog::event::EventData::from_data(
+                                typ,
+                                &data[20..data.len() - 4],
+                                Some(&table_map),
+                            )?;
+                            println!("end:        {:?}", event);
+                        }
+                        mysql_binlog::event::TypeCode::RotateEvent => {
+                            let event = mysql_binlog::event::EventData::from_data(
+                                typ,
+                                &data[20..data.len() - 4],
+                                Some(&table_map),
+                            )?;
+                            println!("end:        {:?}", event);
+                        }
+                        mysql_binlog::event::TypeCode::QueryEvent => {
+                            let event = mysql_binlog::event::EventData::from_data(
+                                typ,
+                                &data[20..data.len() - 4],
+                                Some(&table_map),
+                            )?;
+                            println!("end:        {:?}", event);
+                        }
+                        mysql_binlog::event::TypeCode::TableMapEvent => {
+                            let event = mysql_binlog::event::EventData::from_data(
+                                typ,
+                                &data[20..],
+                                Some(&table_map),
+                            )?;
+                            println!("end:        {:?}", event);
+                            if let Some(e) = event {
+                                match e {
+                                    mysql_binlog::event::EventData::TableMapEvent {
+                                        table_id: d1,
+                                        schema_name: d2,
+                                        table_name: d3,
+                                        columns: d4,
+                                        null_bitmap: d5,
+                                    } => table_map.handle(d1, d2, d3, d4),
+                                    _ => {
+                                        println!("nop")
+                                    }
+                                }
+                            }
+                        }
+                        mysql_binlog::event::TypeCode::UpdateRowsEventV2
+                        | mysql_binlog::event::TypeCode::WriteRowsEventV2
+                        | mysql_binlog::event::TypeCode::DeleteRowsEventV2 => {
+                            let event = mysql_binlog::event::EventData::from_data(
+                                typ,
+                                &data[20..data.len() - 4],
+                                Some(&table_map),
+                            )?;
+                            println!("end:        {:?}", event);
+                        }
+                        _ => {
+                            let event = mysql_binlog::event::EventData::from_data(
+                                typ,
+                                &data[20..],
+                                Some(&table_map),
+                            )?;
+                            println!("end:        {:?}", event)
+                        }
+                    };
                 }
                 Err(e) => {
                     continue;

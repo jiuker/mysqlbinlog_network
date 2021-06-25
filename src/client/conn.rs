@@ -464,7 +464,7 @@ impl Conn {
                         mysql_binlog::event::TypeCode::RotateEvent => {
                             let event = mysql_binlog::event::EventData::from_data(
                                 typ,
-                                &data[20..data.len() - 4],
+                                &data[20..data.len()],
                                 Some(&table_map),
                             )?;
                             println!("end:        {:?}", event);

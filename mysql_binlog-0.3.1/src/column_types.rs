@@ -32,13 +32,13 @@ pub enum ColumnType {
     Bit(u8, u8),
     NewDecimal(u8, u8),
     Enum(u16),
-    Set(u8),
+    Set(u16),
     TinyBlob,
     MediumBlob,
     LongBlob,
     Blob(u8),
     VarString,
-    MyString(u8),
+    MyString(u16),
     Geometry(u8),
     Json(u8),
 }
@@ -123,8 +123,8 @@ impl ColumnType {
                 // XXX todo this actually includes some of the bits from f1
                 match real_type {
                     ColumnType::Enum(_) => ColumnType::Enum(real_size),
-                    ColumnType::Set(_) => ColumnType::Set(f2),
-                    ColumnType::MyString(_) => ColumnType::MyString(f2),
+                    ColumnType::Set(_) => ColumnType::Set(real_size),
+                    ColumnType::MyString(_) => ColumnType::MyString(real_size),
                     i => unimplemented!("unimplemented stringy type {:?}", i),
                 }
             }
@@ -159,7 +159,7 @@ impl ColumnType {
                 Ok(MySQLValue::SignedInteger(val))
             }
             &ColumnType::Null => Ok(MySQLValue::Null),
-            &ColumnType::VarChar(max_len) => {
+            &ColumnType::VarChar(max_len) | &ColumnType::MyString(max_len) => {
                 let value = if max_len > 255 {
                     read_two_byte_length_prefixed_string(r)?
                 } else {
@@ -311,13 +311,6 @@ impl ColumnType {
                 let body = read_var_byte_length_prefixed_bytes(r, size)?;
                 Ok(MySQLValue::Json(jsonb::parse(body)?))
             }
-            &ColumnType::MyString(size) => {
-                println!("{}", size);
-                Err(ColumnParseError::UnimplementedTypeError {
-                    column_type: self.clone(),
-                }
-                .into())
-            }
             &ColumnType::TinyBlob
             | &ColumnType::MediumBlob
             | &ColumnType::LongBlob
@@ -330,7 +323,7 @@ impl ColumnType {
                 .into())
             }
             &ColumnType::Set(size) => {
-                let nbits = (size as u16) * 8;
+                let nbits = size * 8;
                 Ok(MySQLValue::SignedInteger(little_decode_bit(
                     r, nbits, size,
                 )?))

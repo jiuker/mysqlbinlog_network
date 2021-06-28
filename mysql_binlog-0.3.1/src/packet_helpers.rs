@@ -212,7 +212,7 @@ pub(crate) fn decode_bit<R: Read>(r: &mut R, nbits: u16, length: u8) -> io::Resu
     }
     Ok(r.read_u8()? as i64)
 }
-pub(crate) fn little_decode_bit<R: Read>(r: &mut R, nbits: u16, length: u8) -> io::Result<i64> {
+pub(crate) fn little_decode_bit<R: Read>(r: &mut R, nbits: u16, length: u16) -> io::Result<i64> {
     if nbits > 1 {
         match length {
             1..=8 => {

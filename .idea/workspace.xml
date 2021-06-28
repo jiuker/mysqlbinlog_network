@@ -24,7 +24,7 @@
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="good">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/conn.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -170,6 +170,11 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Run mysqlbinlog-network" />
@@ -215,6 +220,7 @@
       <workItem from="1624354687875" duration="2516000" />
       <workItem from="1624413421894" duration="18250000" />
       <workItem from="1624584380321" duration="3027000" />
+      <workItem from="1624842536612" duration="2657000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>

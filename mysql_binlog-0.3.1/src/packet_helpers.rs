@@ -195,7 +195,69 @@ pub(crate) fn read_datetime_subsecond_part<R: Read>(r: &mut R, pack_length: u8) 
         _ => 0u32,
     })
 }
-
+pub(crate) fn decode_bit<R: Read>(r: &mut R, nbits: u16, length: u8) -> io::Result<i64> {
+    if nbits > 1 {
+        match length {
+            1..=8 => {
+                let mut data = vec![0u8; length as usize];
+                r.read_exact(&mut data)?;
+                return (Ok(fixed_length_int(&data) as i64));
+            }
+            _ => return Err(io::Error::from(io::ErrorKind::Other)),
+        }
+    } else {
+        if length != 1 {
+            return Err(io::Error::from(io::ErrorKind::Other));
+        }
+    }
+    Ok(r.read_u8()? as i64)
+}
+//func littleDecodeBit(data []byte, nbits int, length int) (value int64, err error) {
+// 	if nbits > 1 {
+// 		switch length {
+// 		case 1:
+// 			value = int64(data[0])
+// 		case 2:
+// 			value = int64(binary.LittleEndian.Uint16(data))
+// 		case 3:
+// 			value = int64(FixedLengthInt(data[0:3]))
+// 		case 4:
+// 			value = int64(binary.LittleEndian.Uint32(data))
+// 		case 5:
+// 			value = int64(FixedLengthInt(data[0:5]))
+// 		case 6:
+// 			value = int64(FixedLengthInt(data[0:6]))
+// 		case 7:
+// 			value = int64(FixedLengthInt(data[0:7]))
+// 		case 8:
+// 			value = int64(binary.LittleEndian.Uint64(data))
+// 		default:
+// 			err = fmt.Errorf("invalid bit length %d", length)
+// 		}
+// 	} else {
+// 		if length != 1 {
+// 			err = fmt.Errorf("invalid bit length %d", length)
+// 		} else {
+// 			value = int64(data[0])
+// 		}
+// 	}
+// 	return
+// }
+fn fixed_length_int(buf: &[u8]) -> u64 {
+    let mut num = 0u64;
+    for i in 0..buf.len() {
+        num |= (buf[i] as u64) << (i as u32) * 8;
+    }
+    num
+}
+//
+// func FixedLengthInt(buf []byte) uint64 {
+// 	var num uint64 = 0
+// 	for i, b := range buf {
+// 		num |= uint64(b) << (uint(i) * 8)
+// 	}
+// 	return num
+// }
 #[cfg(test)]
 mod tests {
     use std::io::Cursor;

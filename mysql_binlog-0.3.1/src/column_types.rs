@@ -2,6 +2,7 @@ use std::io::{self, Read};
 
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 
+use crate::column_types::ColumnType::MyString;
 use crate::errors::ColumnParseError;
 use crate::jsonb;
 use crate::packet_helpers::*;
@@ -31,7 +32,7 @@ pub enum ColumnType {
     Bit(u8, u8),
     NewDecimal(u8, u8),
     Enum(u16),
-    Set,
+    Set(u8),
     TinyBlob,
     MediumBlob,
     LongBlob,
@@ -68,7 +69,8 @@ impl ColumnType {
             245 => ColumnType::Json(0), // need to implement JsonB
             246 => ColumnType::NewDecimal(0, 0),
             247 => ColumnType::Enum(0),
-            248 => ColumnType::TinyBlob,   // docs say this can't occur
+            248 => ColumnType::Set(0),
+            249 => ColumnType::TinyBlob,   // docs say this can't occur
             250 => ColumnType::MediumBlob, // docs say this can't occur
             251 => ColumnType::LongBlob,   // docs say this can't occur
             252 => ColumnType::Blob(0),
@@ -117,6 +119,7 @@ impl ColumnType {
                 // XXX todo this actually includes some of the bits from f1
                 match real_type {
                     ColumnType::Enum(_) => ColumnType::Enum(real_size),
+                    ColumnType::Set(_) => ColumnType::Set(f2),
                     i => unimplemented!("unimplemented stringy type {:?}", i),
                 }
             }
@@ -315,10 +318,13 @@ impl ColumnType {
                 }
                 .into())
             }
+            &ColumnType::Set(size) => {
+                let nbits = (size as u16) * 8;
+                Ok(MySQLValue::SignedInteger(decode_bit(r, nbits, size)?))
+            }
             &ColumnType::Decimal
             | &ColumnType::NewDate
             | &ColumnType::Bit(..)
-            | &ColumnType::Set
             | &ColumnType::Geometry(..) => {
                 unimplemented!("unhandled value type: {:?}", self);
             }

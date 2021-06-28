@@ -21,7 +21,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="MyString">
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="loucal">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" afterDir="false" />
     </list>
@@ -218,7 +218,7 @@
       <workItem from="1624354687875" duration="2516000" />
       <workItem from="1624413421894" duration="18250000" />
       <workItem from="1624584380321" duration="3027000" />
-      <workItem from="1624842536612" duration="8029000" />
+      <workItem from="1624842536612" duration="9184000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -437,7 +437,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624857890272</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="loucal">
+      <created>1624858610127</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1624858610127</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -476,7 +483,8 @@
     <MESSAGE value="good" />
     <MESSAGE value="parsebit" />
     <MESSAGE value="MyString" />
-    <option name="LAST_COMMIT_MESSAGE" value="MyString" />
+    <MESSAGE value="loucal" />
+    <option name="LAST_COMMIT_MESSAGE" value="loucal" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

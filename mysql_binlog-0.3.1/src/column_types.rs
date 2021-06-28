@@ -291,7 +291,11 @@ impl ColumnType {
                 } else if length == 8 {
                     Ok(MySQLValue::Double(r.read_f64::<LittleEndian>()?))
                 } else {
-                    unimplemented!("wtf is a {}-byte float?", length)
+                    // 不应该出现的类型
+                    Err(ColumnParseError::UnimplementedTypeError {
+                        column_type: self.clone(),
+                    }
+                    .into())
                 }
             }
             &ColumnType::NewDecimal(precision, decimal_places) => {

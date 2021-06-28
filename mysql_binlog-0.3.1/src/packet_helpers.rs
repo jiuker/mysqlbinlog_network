@@ -201,7 +201,24 @@ pub(crate) fn decode_bit<R: Read>(r: &mut R, nbits: u16, length: u8) -> io::Resu
             1..=8 => {
                 let mut data = vec![0u8; length as usize];
                 r.read_exact(&mut data)?;
-                return (Ok(fixed_length_int(&data) as i64));
+                return Ok(bf_fixed_length_int(&data) as i64);
+            }
+            _ => return Err(io::Error::from(io::ErrorKind::Other)),
+        }
+    } else {
+        if length != 1 {
+            return Err(io::Error::from(io::ErrorKind::Other));
+        }
+    }
+    Ok(r.read_u8()? as i64)
+}
+pub(crate) fn little_decode_bit<R: Read>(r: &mut R, nbits: u16, length: u8) -> io::Result<i64> {
+    if nbits > 1 {
+        match length {
+            1..=8 => {
+                let mut data = vec![0u8; length as usize];
+                r.read_exact(&mut data)?;
+                return Ok(fixed_length_int(&data) as i64);
             }
             _ => return Err(io::Error::from(io::ErrorKind::Other)),
         }
@@ -255,6 +272,21 @@ fn fixed_length_int(buf: &[u8]) -> u64 {
 // 	var num uint64 = 0
 // 	for i, b := range buf {
 // 		num |= uint64(b) << (uint(i) * 8)
+// 	}
+// 	return num
+// }
+fn bf_fixed_length_int(buf: &[u8]) -> u64 {
+    let mut num = 0u64;
+    for i in 0..buf.len() {
+        num |= (buf[i] as u64) << ((buf.len() - i - 1) as u32) * 8;
+    }
+    num
+}
+// // BFixedLengthInt: big endian
+// func BFixedLengthInt(buf []byte) uint64 {
+// 	var num uint64 = 0
+// 	for i, b := range buf {
+// 		num |= uint64(b) << (uint(len(buf)-i-1) * 8)
 // 	}
 // 	return num
 // }

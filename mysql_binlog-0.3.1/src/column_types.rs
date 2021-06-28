@@ -104,7 +104,11 @@ impl ColumnType {
                 assert!(max_length != 0);
                 ColumnType::VarChar(max_length)
             }
-            ColumnType::Bit(..) => unimplemented!(),
+            ColumnType::Bit(..) => {
+                let first = cursor.read_u8()?;
+                let second = cursor.read_u8()?;
+                ColumnType::Bit(first, second)
+            }
             ColumnType::NewDecimal(_, _) => {
                 let precision = cursor.read_u8()?;
                 let num_decimals = cursor.read_u8()?;
@@ -320,12 +324,20 @@ impl ColumnType {
             }
             &ColumnType::Set(size) => {
                 let nbits = (size as u16) * 8;
-                Ok(MySQLValue::SignedInteger(decode_bit(r, nbits, size)?))
+                Ok(MySQLValue::SignedInteger(little_decode_bit(
+                    r, nbits, size,
+                )?))
             }
-            &ColumnType::Decimal
-            | &ColumnType::NewDate
-            | &ColumnType::Bit(..)
-            | &ColumnType::Geometry(..) => {
+            &ColumnType::Bit(f, s) => {
+                let nbits = s * 8 + f;
+                let size = (nbits + 7) / 8;
+                Ok(MySQLValue::SignedInteger(decode_bit(
+                    r,
+                    nbits as u16,
+                    size,
+                )?))
+            }
+            &ColumnType::Decimal | &ColumnType::NewDate | &ColumnType::Geometry(..) => {
                 unimplemented!("unhandled value type: {:?}", self);
             }
         }

@@ -21,7 +21,7 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="good">
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="parsebit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" afterDir="false" />
@@ -220,7 +220,7 @@
       <workItem from="1624354687875" duration="2516000" />
       <workItem from="1624413421894" duration="18250000" />
       <workItem from="1624584380321" duration="3027000" />
-      <workItem from="1624842536612" duration="2657000" />
+      <workItem from="1624842536612" duration="4088000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -404,7 +404,21 @@
       <option name="project" value="LOCAL" />
       <updated>1624531778182</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="parsebit">
+      <created>1624847824652</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1624847824652</updated>
+    </task>
+    <task id="LOCAL-00028" summary="parsebit">
+      <created>1624847832576</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1624847832576</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -431,7 +445,8 @@
     <MESSAGE value="get conn" />
     <MESSAGE value="整不动了" />
     <MESSAGE value="good" />
-    <option name="LAST_COMMIT_MESSAGE" value="good" />
+    <MESSAGE value="parsebit" />
+    <option name="LAST_COMMIT_MESSAGE" value="parsebit" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

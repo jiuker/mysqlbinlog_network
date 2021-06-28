@@ -101,7 +101,6 @@ impl ColumnType {
             }
             ColumnType::VarChar(_) => {
                 let max_length = cursor.read_u16::<LittleEndian>()?;
-                assert!(max_length != 0);
                 ColumnType::VarChar(max_length)
             }
             ColumnType::Bit(..) => {
@@ -282,7 +281,7 @@ impl ColumnType {
                     subseconds: frac_part,
                 })
             }
-            &ColumnType::Blob(length_bytes) => {
+            &ColumnType::Blob(length_bytes) | &ColumnType::Geometry(length_bytes) => {
                 let val = read_var_byte_length_prefixed_bytes(r, length_bytes)?;
                 Ok(MySQLValue::Blob(val.into()))
             }
@@ -337,7 +336,7 @@ impl ColumnType {
                     size,
                 )?))
             }
-            &ColumnType::Decimal | &ColumnType::NewDate | &ColumnType::Geometry(..) => {
+            &ColumnType::Decimal | &ColumnType::NewDate => {
                 unimplemented!("unhandled value type: {:?}", self);
             }
         }

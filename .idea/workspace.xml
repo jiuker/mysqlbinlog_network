@@ -24,7 +24,6 @@
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="parsebit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +219,7 @@
       <workItem from="1624354687875" duration="2516000" />
       <workItem from="1624413421894" duration="18250000" />
       <workItem from="1624584380321" duration="3027000" />
-      <workItem from="1624842536612" duration="4088000" />
+      <workItem from="1624842536612" duration="5924000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -418,11 +417,28 @@
       <option name="project" value="LOCAL" />
       <updated>1624847832576</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="parsebit">
+      <created>1624849097535</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1624849097535</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -447,6 +463,22 @@
     <MESSAGE value="good" />
     <MESSAGE value="parsebit" />
     <option name="LAST_COMMIT_MESSAGE" value="parsebit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs</url>
+          <line>127</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs</url>
+          <line>314</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

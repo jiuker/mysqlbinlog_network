@@ -16,7 +16,7 @@ fn main() {
     connA
         .start_sync(&mut Pos {
             name: "mysql-bin.000130".to_string(),
-            pos: 4454,
+            pos: 5004,
         })
         .unwrap();
     connA.get_event().unwrap();

@@ -38,7 +38,7 @@ pub enum ColumnType {
     LongBlob,
     Blob(u8),
     VarString,
-    MyString,
+    MyString(u8),
     Geometry(u8),
     Json(u8),
 }
@@ -75,7 +75,7 @@ impl ColumnType {
             251 => ColumnType::LongBlob,   // docs say this can't occur
             252 => ColumnType::Blob(0),
             253 => ColumnType::VarString, // not implemented
-            254 => ColumnType::MyString,
+            254 => ColumnType::MyString(0),
             255 => ColumnType::Geometry(0), // not implemented
             i => unimplemented!("unhandled column type {}", i),
         }
@@ -114,7 +114,7 @@ impl ColumnType {
                 let num_decimals = cursor.read_u8()?;
                 ColumnType::NewDecimal(precision, num_decimals)
             }
-            ColumnType::VarString | ColumnType::MyString => {
+            ColumnType::VarString | ColumnType::MyString(..) => {
                 let f1 = cursor.read_u8()?;
                 let f2 = cursor.read_u8()?;
                 let real_type = f1;
@@ -124,6 +124,7 @@ impl ColumnType {
                 match real_type {
                     ColumnType::Enum(_) => ColumnType::Enum(real_size),
                     ColumnType::Set(_) => ColumnType::Set(f2),
+                    ColumnType::MyString(_) => ColumnType::MyString(f2),
                     i => unimplemented!("unimplemented stringy type {:?}", i),
                 }
             }
@@ -310,11 +311,17 @@ impl ColumnType {
                 let body = read_var_byte_length_prefixed_bytes(r, size)?;
                 Ok(MySQLValue::Json(jsonb::parse(body)?))
             }
+            &ColumnType::MyString(size) => {
+                println!("{}", size);
+                Err(ColumnParseError::UnimplementedTypeError {
+                    column_type: self.clone(),
+                }
+                .into())
+            }
             &ColumnType::TinyBlob
             | &ColumnType::MediumBlob
             | &ColumnType::LongBlob
-            | &ColumnType::VarString
-            | &ColumnType::MyString => {
+            | &ColumnType::VarString => {
                 // the manual promises that these are never present in binlogs and are
                 // not implemented by MySQL
                 Err(ColumnParseError::UnimplementedTypeError {

@@ -7,9 +7,10 @@ use mysql_binlog::table_map::TableMap;
 use pipe::{PipeReader, PipeWriter};
 use sha1::Sha1;
 use std::error::Error;
+use std::fs::read_to_string;
 use std::io::{BufReader, BufWriter, Read, Write};
 use std::net::TcpStream;
-use std::ops::{Deref, DerefMut, Index};
+use std::ops::{Deref, DerefMut, Index, IndexMut};
 use std::thread::spawn;
 
 pub struct BaseConn {
@@ -301,7 +302,24 @@ impl Conn {
         match *none!(data.get(0)) {
             OK_HEADER => return Ok((vec![], "".to_string())),
             MORE_DATE_HEADER => return Ok((data[1..].to_vec(), "".to_string())),
-            EOF_HEADER => {}
+            EOF_HEADER => {
+                if data.len() > 1 {
+                    return Ok((vec![], AUTH_MYSQL_OLD_PASSWORD.to_string()));
+                }
+                let mut pluginEndIndex = -1;
+                for i in 0..data.len() {
+                    if data[i] == 0x00 {
+                        pluginEndIndex = i as i32;
+                        break;
+                    }
+                }
+                if pluginEndIndex < 0 {
+                    return Err(Box::from("invalid packet"));
+                }
+                let plugin = String::from_utf8(data[1..pluginEndIndex as usize].to_vec())?;
+                let authData = data[pluginEndIndex as usize + 1..].to_vec();
+                return Ok((authData, plugin));
+            }
             _ => {
                 self.handle_error_packet(data)?;
             }

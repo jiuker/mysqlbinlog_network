@@ -312,7 +312,7 @@ impl ColumnType {
             }
             &ColumnType::Json(size) => {
                 let body = read_var_byte_length_prefixed_bytes(r, size)?;
-                Ok(MySQLValue::Json(jsonb::parse(body)?))
+                Ok(MySQLValue::String(jsonb::parse(body)?.to_string()))
             }
             &ColumnType::TinyBlob
             | &ColumnType::MediumBlob

@@ -10,8 +10,10 @@ use serde_json::map::Map as JsonMap;
 use serde_json::Value as JsonValue;
 
 use crate::column_types::ColumnType;
+use crate::column_types::ColumnType::Json;
 use crate::errors::JsonbParseError;
 use crate::packet_helpers;
+use std::fs::read_to_string;
 
 enum FieldType {
     SmallObject,
@@ -109,65 +111,107 @@ fn parse_compound(
     compound_size: CompoundSize,
     compound_type: CompoundType,
 ) -> Result<JsonValue, JsonbParseError> {
-    let start_offset = cursor.position();
-    let (elems, _byte_size) = match compound_size {
+    let data_length = cursor.get_ref().len();
+    let offset_size = match compound_size {
+        CompoundSize::Small => 2,
+        CompoundSize::Large => 4,
+    };
+    if data_length < offset_size {
+        return Ok((JsonValue::Null));
+    }
+    let (count, size) = match compound_size {
         CompoundSize::Small => (
-            u32::from(cursor.read_u16::<LittleEndian>()?),
-            u32::from(cursor.read_u16::<LittleEndian>()?),
+            u32::from(cursor.read_u16::<LittleEndian>()?) as usize,
+            u32::from(cursor.read_u16::<LittleEndian>()?) as usize,
         ),
         CompoundSize::Large => (
-            cursor.read_u32::<LittleEndian>()?,
-            cursor.read_u32::<LittleEndian>()?,
+            cursor.read_u32::<LittleEndian>()? as usize,
+            cursor.read_u32::<LittleEndian>()? as usize,
         ),
     };
-    let elems = elems as usize;
-    let key_offsets = match compound_type {
+    if data_length < size as usize {
+        return Ok((JsonValue::Null));
+    }
+    let (key_entry_size, value_entry_size) = match compound_size {
+        CompoundSize::Small => (4, 3),
+        CompoundSize::Large => (6, 5),
+    };
+    let mut header_size = 2 * offset_size + count * value_entry_size;
+    header_size += match compound_type {
+        CompoundType::Array => 0,
+        CompoundType::Object => count * key_entry_size,
+    };
+    if header_size > size as usize {
+        return Ok((JsonValue::Null));
+    }
+    let keys = match compound_type {
         CompoundType::Array => None,
         CompoundType::Object => {
-            let mut offsets = Vec::with_capacity(elems);
-            for _ in 0..elems {
-                let offset = match compound_size {
-                    CompoundSize::Small => u32::from(cursor.read_u16::<LittleEndian>()?),
-                    CompoundSize::Large => cursor.read_u32::<LittleEndian>()?,
+            let mut rsl = vec![];
+            for i in 0..count {
+                let entry_offset = 2 * offset_size + key_entry_size * i;
+                cursor.set_position(entry_offset as u64 + 1);
+                let key_offset = match compound_size {
+                    CompoundSize::Small => cursor.read_u16::<LittleEndian>()? as usize,
+                    CompoundSize::Large => cursor.read_u32::<LittleEndian>()? as usize,
                 };
-                let key_size = cursor.read_u16::<LittleEndian>()? as usize;
-                offsets.push((offset, key_size));
+                let key_length = cursor.read_u16::<LittleEndian>()? as usize;
+                if data_length < (key_offset) as usize + key_length {
+                    return Ok((JsonValue::Null));
+                }
+                cursor.set_position(key_offset as u64 + 1);
+                let key = packet_helpers::read_nbytes(&mut cursor, key_length)?;
+                let key = String::from_utf8_lossy(&key).into_owned();
+                rsl.push(key);
             }
-            Some(offsets)
+            Some(rsl)
         }
-    };
-    let value_offsets = {
-        let mut offsets = Vec::with_capacity(elems);
-        for _ in 0..elems {
-            offsets.push(parse_maybe_inlined_value(&mut cursor, compound_size)?);
-        }
-        offsets
-    };
-    let keys = if let Some(key_offsets) = key_offsets {
-        let mut keys = Vec::with_capacity(elems);
-        for (_, size) in key_offsets.into_iter() {
-            let key = packet_helpers::read_nbytes(&mut cursor, size)?;
-            let key = String::from_utf8_lossy(&key).into_owned();
-            keys.push(key);
-        }
-        Some(keys)
-    } else {
-        None
     };
     let values = {
-        let mut values = Vec::with_capacity(elems);
-        for (field_type, offset_or_inlined) in value_offsets.into_iter() {
-            let val = match offset_or_inlined {
-                OffsetOrInline::Inline(v) => v,
-                OffsetOrInline::Offset(o) => {
-                    assert!(u64::from(o) + start_offset == cursor.position());
-                    let type_indicator = FieldType::from_byte(field_type)?;
-                    parse_any_with_type_indicator(cursor, type_indicator)?
-                }
+        let mut rsl = vec![];
+        for i in 0..count {
+            let mut entry_offset = 2 * offset_size + value_entry_size * i;
+            // if isObject {
+            //     entryOffset += keyEntrySize * count
+            // }
+            entry_offset += match compound_type {
+                CompoundType::Array => 0,
+                CompoundType::Object => key_entry_size * count,
             };
-            values.push(val)
+            let tp_data = cursor.get_ref().get(entry_offset + 1).unwrap();
+            let tp_data_c = (*tp_data).clone();
+            let tp = FieldType::from_byte(*tp_data)?;
+            let is_inline = match tp {
+                FieldType::Uint16 | FieldType::Int16 | FieldType::Literal => true,
+                FieldType::Int32 | FieldType::Uint32 => !match compound_size {
+                    CompoundSize::Small => true,
+                    CompoundSize::Large => false,
+                },
+                _ => false,
+            };
+            if is_inline {
+                let data = cursor.get_ref()[entry_offset + 1..entry_offset + value_entry_size + 1]
+                    .to_vec();
+                let mut cur = Cursor::new(data);
+                let value = parse_any(&mut cur)?;
+                rsl.push(value);
+                continue;
+            }
+            cursor.set_position(entry_offset as u64 + 2);
+            let value_offset = match compound_size {
+                CompoundSize::Small => u32::from(cursor.read_u16::<LittleEndian>()?) as usize,
+                CompoundSize::Large => u32::from(cursor.read_u32::<LittleEndian>()?) as usize,
+            };
+            if data_length < value_offset {
+                return Ok(JsonValue::Null);
+            }
+            let mut data = vec![tp_data_c];
+            data.extend_from_slice(&mut cursor.get_ref()[value_offset + 1..data_length].to_vec());
+            let mut cur = Cursor::new(data);
+            let value = parse_any(&mut cur)?;
+            rsl.push(value);
         }
-        values
+        rsl
     };
     Ok(if let Some(keys) = keys {
         let map = JsonMap::from_iter(keys.into_iter().zip(values.into_iter()));

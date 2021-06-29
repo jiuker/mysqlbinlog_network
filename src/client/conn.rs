@@ -519,9 +519,7 @@ impl Conn {
                         }
                     };
                 }
-                Err(e) => {
-                    continue;
-                }
+                Err(e) => return Err(e),
             };
         }
         Ok(())

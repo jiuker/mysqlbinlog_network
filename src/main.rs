@@ -7,16 +7,16 @@ use std::thread::spawn;
 
 fn main() {
     let mut connA = Conn::new(
-        "127.0.0.1:3306".to_string(),
+        "127.0.0.1:3307".to_string(),
         "root".to_string(),
-        "123456".to_string(),
+        "root".to_string(),
         "dmall".to_string(),
     )
     .unwrap();
     connA
         .start_sync(&mut Pos {
-            name: "mysql-bin.000131".to_string(),
-            pos: 2724113,
+            name: "binlog.000002".to_string(),
+            pos: 34834,
         })
         .unwrap();
     connA.get_event().unwrap();

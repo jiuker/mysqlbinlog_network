@@ -5,14 +5,16 @@ use mysql::consts::Command;
 use mysql::prelude::Queryable;
 use mysql::{Conn, Opts};
 use mysql_binlog::table_map::TableMap;
+use std::convert::TryFrom;
 use std::error::Error;
 use std::io::Write;
 use std::ops::{Deref, DerefMut};
 use std::result;
+use std::str::FromStr;
 
-pub struct OffsetConfig {
+pub struct OffsetConfig<'a> {
     pub pos: Option<(String, u32)>,
-    pub gtid: Option<String>,
+    pub gtid: Option<Vec<(&'a str, Vec<(i64, i64)>)>>,
 }
 type Result<T> = result::Result<T, Box<dyn Error>>;
 pub struct Runner {
@@ -89,9 +91,22 @@ impl Runner {
             data.write_u32::<LittleEndian>("".len() as u32)?;
             data.write_all("".as_bytes())?;
             data.write_u64::<LittleEndian>(4)?;
-            let gtid_encode = none_ref!(offset.gtid).as_bytes();
-            data.write_u32::<LittleEndian>(gtid_encode.len() as u32)?;
-            data.write_all(gtid_encode)?;
+            let gtid = none_ref!(offset.gtid);
+            let mut gtiddata = vec![0u8; 0];
+            gtiddata.write_u64::<LittleEndian>(gtid.len() as u64)?;
+            for i in 0..gtid.len() {
+                let item = none!(gtid.get(i));
+                let uid = uuid::Uuid::from_str(&item.0)?;
+                gtiddata.write_all(uid.as_bytes())?;
+                gtiddata.write_i64::<LittleEndian>(item.1.len() as i64)?;
+                for ii in 0..item.1.len() {
+                    let i_item = none!(item.1.get(ii));
+                    gtiddata.write_i64::<LittleEndian>(i_item.0)?;
+                    gtiddata.write_i64::<LittleEndian>(i_item.1)?;
+                }
+            }
+            data.write_u32::<LittleEndian>(gtiddata.len() as u32)?;
+            data.write_all(gtiddata.as_slice())?;
             self.write_command(Command::COM_BINLOG_DUMP_GTID, data.as_slice())?;
         }
         Ok(())

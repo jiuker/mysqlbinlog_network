@@ -9,7 +9,10 @@ fn main() {
         .write_dump_cmd(OffsetConfig {
             // pos: Some(("binlog.000002".to_string(), 34834)),
             pos: None,
-            gtid: Some("0575a804-6403-11ea-8d3d-e454e8d4a4fe:1-1463923".to_string()),
+            gtid: Some(vec![(
+                "0575a804-6403-11ea-8d3d-e454e8d4a4fe",
+                vec![(1, 1463923)],
+            )]),
         })
         .unwrap();
     runner.get_event().unwrap();

@@ -482,6 +482,7 @@ dependencies = [
  "mysql",
  "mysql_binlog",
  "sys-info",
+ "uuid",
 ]
 
 [[package]]

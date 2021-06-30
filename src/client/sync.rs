@@ -5,7 +5,7 @@ use mysql::consts::Command;
 use mysql::prelude::Queryable;
 use mysql::{Conn, Opts};
 use mysql_binlog::event::EventData::{EventHeader, FormatDescriptionEvent};
-use mysql_binlog::event::{ChecksumAlgorithm, EventData, EVENT_HEADER_SIZE};
+use mysql_binlog::event::{ChecksumAlgorithm, EVENT_HEADER_SIZE};
 use mysql_binlog::table_map::TableMap;
 use std::error::Error;
 use std::io::Write;
@@ -205,7 +205,9 @@ impl Runner {
                                     match ca {
                                         ChecksumAlgorithm::None => binlog_checksum_length = 0,
                                         ChecksumAlgorithm::CRC32 => binlog_checksum_length = 4,
-                                        ChecksumAlgorithm::Other(u8) => binlog_checksum_length = 8,
+                                        ChecksumAlgorithm::Other(size) => {
+                                            binlog_checksum_length = size as usize
+                                        }
                                     }
                                 }
                             }

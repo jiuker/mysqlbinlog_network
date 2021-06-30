@@ -38,7 +38,12 @@ impl Runner {
         let conn = mysql::Conn::new(opt.clone())?;
         Ok(Runner { conn, opt })
     }
-    pub fn register_slave(&mut self) -> Result<()> {
+    fn prepare(&mut self) -> Result<()> {
+        self.register_slave()?;
+        self.write_register_slave_command()?;
+        self.enable_semi_sync()
+    }
+    fn register_slave(&mut self) -> Result<()> {
         let rsl: Vec<(String, String)> =
             self.query("SHOW GLOBAL VARIABLES LIKE 'BINLOG_CHECKSUM'")?;
         if rsl.len() == 1 {
@@ -50,7 +55,7 @@ impl Runner {
         self.query_drop("SET @master_heartbeat_period=30000000000;")?;
         Ok(())
     }
-    pub fn write_register_slave_command(&mut self) -> Result<()> {
+    fn write_register_slave_command(&mut self) -> Result<()> {
         let h_name = sys_info::hostname()?;
         let mut data = vec![0u8; 0];
         // slave
@@ -69,7 +74,7 @@ impl Runner {
         println!("{:?}", rsl);
         Ok(())
     }
-    pub fn enable_semi_sync(&mut self) -> Result<()> {
+    fn enable_semi_sync(&mut self) -> Result<()> {
         let _: Vec<(String, String)> =
             self.query("SHOW VARIABLES LIKE 'rpl_semi_sync_master_enabled';")?;
         self.query_drop("SET @rpl_semi_sync_slave = 1;")?;
@@ -77,6 +82,7 @@ impl Runner {
     }
     pub fn write_dump_cmd(&mut self, offset: OffsetConfig) -> Result<()> {
         if offset.pos.is_some() {
+            self.prepare()?;
             let mut data = vec![0u8; 0];
             data.write_u32::<LittleEndian>(none_ref!(offset.pos).1)?;
             data.write_u16::<LittleEndian>(0)?;
@@ -84,6 +90,7 @@ impl Runner {
             data.write_all(none_ref!(offset.pos).0.as_bytes())?;
             self.write_command(Command::COM_BINLOG_DUMP, data.as_slice())?;
         } else if offset.gtid.is_some() {
+            self.prepare()?;
             let mut data = vec![0u8; 0];
             data.write_u16::<LittleEndian>(0)?;
             data.write_u32::<LittleEndian>(789)?;
@@ -107,6 +114,8 @@ impl Runner {
             data.write_u32::<LittleEndian>(gtiddata.len() as u32)?;
             data.write_all(gtiddata.as_slice())?;
             self.write_command(Command::COM_BINLOG_DUMP_GTID, data.as_slice())?;
+        } else {
+            return Err(Box::from("show set gtid or fileName/offset"));
         }
         Ok(())
     }

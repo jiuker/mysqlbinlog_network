@@ -21,12 +21,9 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="parse json">
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="suporrt gtid">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +234,7 @@
       <workItem from="1624584380321" duration="3027000" />
       <workItem from="1624842536612" duration="9184000" />
       <workItem from="1624951886233" duration="5755000" />
-      <workItem from="1625016651763" duration="20988000" />
+      <workItem from="1625016651763" duration="21420000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -519,7 +516,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625038533414</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="suporrt gtid">
+      <created>1625040648427</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1625040648427</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +564,8 @@
     <MESSAGE value="MyString" />
     <MESSAGE value="loucal" />
     <MESSAGE value="parse json" />
-    <option name="LAST_COMMIT_MESSAGE" value="parse json" />
+    <MESSAGE value="suporrt gtid" />
+    <option name="LAST_COMMIT_MESSAGE" value="suporrt gtid" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

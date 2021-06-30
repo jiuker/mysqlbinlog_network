@@ -247,7 +247,7 @@ impl Conn {
         self.0.stream.as_ref().expect("incomplete connection")
     }
 
-    pub fn stream_mut(&mut self) -> &mut MySyncFramed<Stream> {
+    fn stream_mut(&mut self) -> &mut MySyncFramed<Stream> {
         self.0.stream.as_mut().expect("incomplete connection")
     }
 
@@ -414,7 +414,7 @@ impl Conn {
         self.read_packet().map(|_| ())
     }
 
-    pub fn write_packet<T: Into<Vec<u8>>>(&mut self, data: T) -> Result<()> {
+    fn write_packet<T: Into<Vec<u8>>>(&mut self, data: T) -> Result<()> {
         self.stream_mut().send(data.into())?;
         Ok(())
     }

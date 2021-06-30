@@ -323,7 +323,7 @@ impl EventData {
             TypeCode::RotateEvent => {
                 let log_name = match String::from_utf8(Vec::from(&data[8..])) {
                     Ok(d) => d,
-                    Err(e) => return Err(EofError),
+                    Err(_e) => return Err(EofError),
                 };
                 Ok(Some(EventData::RotateEvent {
                     pos: cursor.read_u64::<LittleEndian>()?,

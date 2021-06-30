@@ -1,23 +1,15 @@
-use mysqlbinlog_network::client::conn::Conn;
-use mysqlbinlog_network::client::pos::Pos;
-use std::cell::RefCell;
-use std::net::TcpStream;
-use std::sync::Arc;
-use std::thread::spawn;
+use mysqlbinlog_network::client::sync::{OffsetConfig, Runner};
 
 fn main() {
-    let mut connA = Conn::new(
-        "127.0.0.1:3306".to_string(),
-        "root".to_string(),
-        "123456".to_string(),
-        "dmall".to_string(),
-    )
-    .unwrap();
-    connA
-        .start_sync(&mut Pos {
-            name: "mysql-bin.000132".to_string(),
-            pos: 194,
+    let mut runner = Runner::new("mysql://root:root@127.0.0.1:3307").unwrap();
+    runner.register_slave().unwrap();
+    runner.write_register_slave_command().unwrap();
+    runner.enable_semi_sync().unwrap();
+    runner
+        .write_dump_cmd(OffsetConfig {
+            pos: Some(("binlog.000002".to_string(), 34834)),
+            gtid: None,
         })
         .unwrap();
-    connA.get_event().unwrap();
+    runner.get_event().unwrap();
 }

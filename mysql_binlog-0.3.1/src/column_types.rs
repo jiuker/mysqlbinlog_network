@@ -2,7 +2,6 @@ use std::io::{self, Read};
 
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 
-use crate::column_types::ColumnType::MyString;
 use crate::errors::ColumnParseError;
 use crate::jsonb;
 use crate::packet_helpers::*;

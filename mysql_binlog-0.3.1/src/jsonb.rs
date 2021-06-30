@@ -10,10 +10,8 @@ use serde_json::map::Map as JsonMap;
 use serde_json::Value as JsonValue;
 
 use crate::column_types::ColumnType;
-use crate::column_types::ColumnType::Json;
 use crate::errors::JsonbParseError;
 use crate::packet_helpers;
-use std::fs::read_to_string;
 
 enum FieldType {
     SmallObject,
@@ -117,7 +115,7 @@ fn parse_compound(
         CompoundSize::Large => 4,
     };
     if data_length < offset_size {
-        return Ok((JsonValue::Null));
+        return Ok(JsonValue::Null);
     }
     let (count, size) = match compound_size {
         CompoundSize::Small => (
@@ -130,7 +128,7 @@ fn parse_compound(
         ),
     };
     if data_length < size as usize {
-        return Ok((JsonValue::Null));
+        return Ok(JsonValue::Null);
     }
     let (key_entry_size, value_entry_size) = match compound_size {
         CompoundSize::Small => (4, 3),
@@ -142,7 +140,7 @@ fn parse_compound(
         CompoundType::Object => count * key_entry_size,
     };
     if header_size > size as usize {
-        return Ok((JsonValue::Null));
+        return Ok(JsonValue::Null);
     }
     let keys = match compound_type {
         CompoundType::Array => None,
@@ -157,7 +155,7 @@ fn parse_compound(
                 };
                 let key_length = cursor.read_u16::<LittleEndian>()? as usize;
                 if data_length < (key_offset) as usize + key_length {
-                    return Ok((JsonValue::Null));
+                    return Ok(JsonValue::Null);
                 }
                 cursor.set_position(key_offset as u64 + 1);
                 let key = packet_helpers::read_nbytes(&mut cursor, key_length)?;

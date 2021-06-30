@@ -22,38 +22,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="parse json">
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/.cargo-ok" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/.cargo_vcs_info.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/Cargo.toml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/Cargo.toml.orig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/LICENSE-APACHE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/LICENSE-MIT" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/README.tpl" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/azure-pipelines.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/build.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/local_infile.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/opts.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/pool.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/query.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/query_result.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/queryable.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/stmt.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/stmt_cache.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/transaction.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/error.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/io/mod.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/io/tcp.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mysql-20.1.0/src/lib.rs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/conn.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/conn.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkg/ops.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkg/ops.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -267,7 +238,7 @@
       <workItem from="1624584380321" duration="3027000" />
       <workItem from="1624842536612" duration="9184000" />
       <workItem from="1624951886233" duration="5755000" />
-      <workItem from="1625016651763" duration="10658000" />
+      <workItem from="1625016651763" duration="13687000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -521,7 +492,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624954717849</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="parse json">
+      <created>1625029951217</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1625029951217</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

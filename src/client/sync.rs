@@ -1,6 +1,7 @@
 use crate::none;
 use crate::none_ref;
 use byteorder::{BigEndian, LittleEndian, WriteBytesExt};
+use mysql::consts::Command;
 use mysql::prelude::Queryable;
 use mysql::{Conn, Opts};
 use std::error::Error;
@@ -65,6 +66,8 @@ impl Runner {
         data.write_u32::<LittleEndian>(0);
         data.write_u32::<LittleEndian>(0);
         self.write_packet(data)?;
+        let rsl = self.read_packet()?;
+        dbg!(rsl);
         Ok(())
     }
     fn enable_semi_sync(&mut self) -> Result<()> {
@@ -100,8 +103,8 @@ fn test_conn_progress() {
         })
         .unwrap();
     loop {
-        let data = runner.stream_mut().next().transpose();
-        dbg!(data);
+        let rsl = runner.read_packet().unwrap();
+        dbg!(rsl);
         sleep_ms(1000)
     }
 }

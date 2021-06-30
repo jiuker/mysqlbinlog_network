@@ -710,7 +710,7 @@ impl Conn {
         self.write_packet(body)
     }
 
-    fn write_command(&mut self, cmd: Command, data: &[u8]) -> Result<()> {
+    pub fn write_command(&mut self, cmd: Command, data: &[u8]) -> Result<()> {
         let mut body = Vec::with_capacity(1 + data.len());
         body.push(cmd as u8);
         body.extend_from_slice(data);

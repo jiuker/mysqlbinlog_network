@@ -5,7 +5,6 @@ use mysql::consts::Command;
 use mysql::prelude::Queryable;
 use mysql::{Conn, Opts};
 use mysql_binlog::table_map::TableMap;
-use std::convert::TryFrom;
 use std::error::Error;
 use std::io::Write;
 use std::ops::{Deref, DerefMut};

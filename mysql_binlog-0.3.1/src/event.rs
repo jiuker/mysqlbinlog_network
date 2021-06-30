@@ -121,6 +121,14 @@ pub type RowData = Vec<Option<MySQLValue>>;
 
 #[derive(Debug)]
 pub enum EventData {
+    EventHeader {
+        timestamp: u32,
+        event_type: TypeCode,
+        server_id: u32,
+        event_size: u32,
+        log_pos: u32,
+        flags: u16,
+    },
     XIDEvent {
         xid: u64,
     },
@@ -308,8 +316,23 @@ fn parse_rows_event<R: Read + Seek>(
     }
     Ok(RowsEvent { table_id, rows })
 }
-
+pub const EVENT_HEADER_SIZE: usize = 19;
+pub const BINLOG_CHECKSUM_LENGTH: usize = 4;
 impl EventData {
+    pub fn parse_header(data: &[u8]) -> Result<Option<EventData>, EventParseError> {
+        if data.len() < EVENT_HEADER_SIZE {
+            return Err(EofError);
+        }
+        let mut cursor = Cursor::new(data);
+        Ok(Some(EventData::EventHeader {
+            timestamp: cursor.read_u32::<LittleEndian>()?,
+            event_type: TypeCode::from_byte(cursor.read_u8()?),
+            server_id: cursor.read_u32::<LittleEndian>()?,
+            event_size: cursor.read_u32::<LittleEndian>()?,
+            log_pos: cursor.read_u32::<LittleEndian>()?,
+            flags: cursor.read_u16::<LittleEndian>()?,
+        }))
+    }
     pub fn from_data(
         type_code: TypeCode,
         data: &[u8],

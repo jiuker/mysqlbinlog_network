@@ -8,7 +8,7 @@ fn main() {
             pos: None,
             gtid: Some(vec![(
                 "0575a804-6403-11ea-8d3d-e454e8d4a4fe",
-                vec![(1, 1463923)],
+                vec![(1, 1467868)],
             )]),
         })
         .unwrap();

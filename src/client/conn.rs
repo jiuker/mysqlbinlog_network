@@ -3,6 +3,7 @@ use crate::none;
 use crate::pkg::end_dian::{put_u16lit_2, put_u32lit_4, put_u8lit_1, u16lit, u32lit};
 use crate::pkg::err::Result;
 use crate::pkg::vec::set_to_vec;
+use byteorder::{BigEndian, LittleEndian, WriteBytesExt};
 use mysql_binlog::table_map::TableMap;
 use pipe::{PipeReader, PipeWriter};
 use sha1::Sha1;
@@ -48,7 +49,7 @@ impl BaseConn {
         *none!(data.get_mut(1)) = (length >> 8 as u8) as u8;
         *none!(data.get_mut(2)) = (length >> 16 as u8) as u8;
         *none!(data.get_mut(3)) = self.sequence as u8;
-        self.bw.write(data.as_slice())?;
+        self.bw.write_all(data.as_slice())?;
         self.sequence = self.sequence.wrapping_add(1);
         self.bw.flush();
         Ok(())
@@ -394,71 +395,30 @@ impl Conn {
     }
     fn write_binlog_dump_command(&mut self, pos_args: &Pos) -> Result<()> {
         self.reset_sequence();
-        let mut data = vec![0; 4 + 1 + 4 + 2 + 4 + pos_args.name.len()];
-        let mut pos = 4;
-        put_u8lit_1(&mut data, pos, 18);
-        pos += 1;
-
-        put_u32lit_4(&mut data, pos, pos_args.pos);
-        pos += 4;
-
-        put_u16lit_2(&mut data, pos, 0);
-        pos += 2;
-
-        put_u32lit_4(&mut data, pos, self.server_id);
-        pos += 4;
-
-        set_to_vec(&mut data, pos, pos_args.name.as_bytes())?;
-
+        let mut data = vec![0u8; 4];
+        data.write_u8(18);
+        data.write_u32::<LittleEndian>(pos_args.pos.clone());
+        data.write_u16::<LittleEndian>(0);
+        data.write_u32::<LittleEndian>(789);
+        data.write_all(pos_args.name.clone().as_bytes());
         self.write_pack(&mut data)
     }
     fn write_register_slave_command(&mut self) -> Result<()> {
-        self.reset_sequence();
         let h_name = sys_info::hostname()?;
-        let mut data = vec![
-            0;
-            4 + 1
-                + 4
-                + 1
-                + h_name.bytes().len()
-                + 1
-                + self.user.len()
-                + 1
-                + self.password.len()
-                + 2
-                + 4
-                + 4
-        ];
-        let mut pos = 4;
+        self.reset_sequence();
+        let mut data = vec![0u8; 4];
         // slave
-
-        put_u8lit_1(&mut data, pos, 21)?;
-        pos += 1;
-
-        put_u32lit_4(&mut data, pos, self.server_id)?;
-        pos += 4;
-
-        put_u8lit_1(&mut data, pos, h_name.len() as u8)?;
-        pos += 1;
-
-        pos += set_to_vec(&mut data, pos, h_name.as_bytes())?;
-
-        put_u8lit_1(&mut data, pos, self.user.len() as u8)?;
-        pos += 1;
-
-        pos += set_to_vec(&mut data, pos, self.user.as_bytes())?;
-
-        put_u8lit_1(&mut data, pos, self.password.len() as u8)?;
-        pos += 1;
-
-        pos += set_to_vec(&mut data, pos, self.password.as_bytes())?;
-
-        put_u16lit_2(&mut data, pos, self.port)?;
-        pos += 2;
-        put_u32lit_4(&mut data, pos, 0)?;
-
-        pos += 4;
-        put_u32lit_4(&mut data, pos, 0)?;
+        data.write_u8(21);
+        data.write_u32::<LittleEndian>(789);
+        data.write_u8(h_name.len() as u8);
+        data.write_all(h_name.as_bytes());
+        data.write_u8(self.user.len() as u8);
+        data.write_all(self.user.clone().as_bytes());
+        data.write_u8(self.password.clone().len() as u8);
+        data.write_all(self.password.clone().as_bytes());
+        data.write_u16::<LittleEndian>(3306);
+        data.write_u32::<LittleEndian>(0);
+        data.write_u32::<LittleEndian>(0);
         self.write_pack(&mut data)
     }
     pub fn get_event(&mut self) -> Result<()> {

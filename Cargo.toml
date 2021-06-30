@@ -17,3 +17,4 @@ seek_bufread = "1.2.2"
 acc_reader = "2.0.0"
 pipe = "*"
 serde_json="*"
+mysql = {path = "./mysql-20.1.0"}

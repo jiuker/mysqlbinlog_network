@@ -3,12 +3,6 @@
 version = 3
 
 [[package]]
-name = "acc_reader"
-version = "2.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0fd023affea2bbda90ae32be0563f64ada6d4666d90e60c20277ae4ce08e2799"
-
-[[package]]
 name = "adler"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -192,26 +186,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "crossbeam-channel"
-version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "06ed27e177f16d65f0f0c22a213e17c696ace5dd64b14258b52f9417ccb52db4"
-dependencies = [
- "cfg-if 1.0.0",
- "crossbeam-utils",
-]
-
-[[package]]
-name = "crossbeam-utils"
-version = "0.8.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d82cfc11ce7f2c3faef78d8a684447b40d503d9681acebed6cb728d45940c4db"
-dependencies = [
- "cfg-if 1.0.0",
- "lazy_static",
-]
-
-[[package]]
 name = "derive_utils"
 version = "0.11.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -320,12 +294,6 @@ checksum = "d7afe4a420e3fe79967a00898cc1f4db7c8a49a9333a29f8a4bd76a253d5cd04"
 dependencies = [
  "ahash",
 ]
-
-[[package]]
-name = "hmac-sha256"
-version = "0.1.6"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "219d368c625166098039429766941449ebf303da35d642eb339503a2bdad3423"
 
 [[package]]
 name = "idna"
@@ -510,17 +478,10 @@ dependencies = [
 name = "mysqlbinlog-network"
 version = "0.1.0"
 dependencies = [
- "acc_reader",
  "byteorder",
- "hmac-sha256",
  "mysql",
  "mysql_binlog",
- "pipe",
- "seek_bufread",
- "serde_json",
- "sha1",
  "sys-info",
- "time 0.3.0-alpha-2",
 ]
 
 [[package]]
@@ -653,15 +614,6 @@ name = "percent-encoding"
 version = "2.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d4fd5641d01c8f18a23da7b6fe29298ff4b55afcccdf78973b24cf3175fee32e"
-
-[[package]]
-name = "pipe"
-version = "0.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1c7b8f27da217eb966df4c58d4159ea939431950ca03cf782c22bd7c5c1d8d75"
-dependencies = [
- "crossbeam-channel",
-]
 
 [[package]]
 name = "pkg-config"
@@ -875,12 +827,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "seek_bufread"
-version = "1.2.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d8a248bca144497822c75e8a12d26b7c0bfd9240fc4baa0b2f64f81619ddd58d"
-
-[[package]]
 name = "semver"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -957,15 +903,6 @@ name = "standback"
 version = "0.2.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e113fb6f3de07a243d434a56ec6f186dfd51cb08448239fe7bcae73f87ff28ff"
-dependencies = [
- "version_check",
-]
-
-[[package]]
-name = "standback"
-version = "0.3.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e0ec3b06373532b9ee2d1538ffa2eed69ad983b9cd8a42d4d76fc8555512259"
 dependencies = [
  "version_check",
 ]
@@ -1098,22 +1035,11 @@ checksum = "4752a97f8eebd6854ff91f1c1824cd6160626ac4bd44287f7f4ea2035a02a242"
 dependencies = [
  "const_fn",
  "libc",
- "standback 0.2.17",
+ "standback",
  "stdweb",
  "time-macros",
  "version_check",
  "winapi",
-]
-
-[[package]]
-name = "time"
-version = "0.3.0-alpha-2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f906d7af3f9c93ef57452c3c7d577f0dcfa1700516dcd15c7ba75ede4f0ed08"
-dependencies = [
- "const_fn",
- "libc",
- "standback 0.3.3",
 ]
 
 [[package]]
@@ -1135,7 +1061,7 @@ dependencies = [
  "proc-macro-hack",
  "proc-macro2",
  "quote",
- "standback 0.2.17",
+ "standback",
  "syn",
 ]
 

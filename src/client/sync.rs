@@ -82,6 +82,17 @@ impl Runner {
             data.write_u32::<LittleEndian>(789)?;
             data.write_all(none_ref!(offset.pos).0.as_bytes())?;
             self.write_command(Command::COM_BINLOG_DUMP, data.as_slice())?;
+        } else if offset.gtid.is_some() {
+            let mut data = vec![0u8; 0];
+            data.write_u16::<LittleEndian>(0)?;
+            data.write_u32::<LittleEndian>(789)?;
+            data.write_u32::<LittleEndian>("".len() as u32)?;
+            data.write_all("".as_bytes())?;
+            data.write_u64::<LittleEndian>(4)?;
+            let gtid_encode = none_ref!(offset.gtid).as_bytes();
+            data.write_u32::<LittleEndian>(gtid_encode.len() as u32)?;
+            data.write_all(gtid_encode)?;
+            self.write_command(Command::COM_BINLOG_DUMP_GTID, data.as_slice())?;
         }
         Ok(())
     }

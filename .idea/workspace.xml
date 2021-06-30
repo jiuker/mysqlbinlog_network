@@ -23,17 +23,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="parse json">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/event.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/jsonb.rs" beforeDir="false" afterPath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/jsonb.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/conn.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/client/pos.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkg/end_dian.rs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkg/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkg/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pkg/vec.rs" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +237,7 @@
       <workItem from="1624584380321" duration="3027000" />
       <workItem from="1624842536612" duration="9184000" />
       <workItem from="1624951886233" duration="5755000" />
-      <workItem from="1625016651763" duration="16426000" />
+      <workItem from="1625016651763" duration="18884000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>
@@ -512,7 +505,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625032929122</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="parse json">
+      <created>1625036100335</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1625036100335</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

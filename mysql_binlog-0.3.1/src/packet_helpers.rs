@@ -229,37 +229,7 @@ pub(crate) fn little_decode_bit<R: Read>(r: &mut R, nbits: u16, length: u16) -> 
     }
     Ok(r.read_u8()? as i64)
 }
-//func littleDecodeBit(data []byte, nbits int, length int) (value int64, err error) {
-// 	if nbits > 1 {
-// 		switch length {
-// 		case 1:
-// 			value = int64(data[0])
-// 		case 2:
-// 			value = int64(binary.LittleEndian.Uint16(data))
-// 		case 3:
-// 			value = int64(FixedLengthInt(data[0:3]))
-// 		case 4:
-// 			value = int64(binary.LittleEndian.Uint32(data))
-// 		case 5:
-// 			value = int64(FixedLengthInt(data[0:5]))
-// 		case 6:
-// 			value = int64(FixedLengthInt(data[0:6]))
-// 		case 7:
-// 			value = int64(FixedLengthInt(data[0:7]))
-// 		case 8:
-// 			value = int64(binary.LittleEndian.Uint64(data))
-// 		default:
-// 			err = fmt.Errorf("invalid bit length %d", length)
-// 		}
-// 	} else {
-// 		if length != 1 {
-// 			err = fmt.Errorf("invalid bit length %d", length)
-// 		} else {
-// 			value = int64(data[0])
-// 		}
-// 	}
-// 	return
-// }
+
 fn fixed_length_int(buf: &[u8]) -> u64 {
     let mut num = 0u64;
     for i in 0..buf.len() {
@@ -267,14 +237,7 @@ fn fixed_length_int(buf: &[u8]) -> u64 {
     }
     num
 }
-//
-// func FixedLengthInt(buf []byte) uint64 {
-// 	var num uint64 = 0
-// 	for i, b := range buf {
-// 		num |= uint64(b) << (uint(i) * 8)
-// 	}
-// 	return num
-// }
+
 fn bf_fixed_length_int(buf: &[u8]) -> u64 {
     let mut num = 0u64;
     for i in 0..buf.len() {
@@ -282,14 +245,7 @@ fn bf_fixed_length_int(buf: &[u8]) -> u64 {
     }
     num
 }
-// // BFixedLengthInt: big endian
-// func BFixedLengthInt(buf []byte) uint64 {
-// 	var num uint64 = 0
-// 	for i, b := range buf {
-// 		num |= uint64(b) << (uint(len(buf)-i-1) * 8)
-// 	}
-// 	return num
-// }
+
 #[cfg(test)]
 mod tests {
     use std::io::Cursor;

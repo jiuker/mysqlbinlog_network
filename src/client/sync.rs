@@ -40,7 +40,6 @@ impl DerefMut for Runner {
 }
 impl Runner {
     pub fn new(url: &str, server_id: u32) -> Result<Self> {
-        // mysql://us%20r:p%20w@localhost:3308
         let opt = mysql::Opts::from_url(url)?;
         let conn = mysql::Conn::new(opt.clone())?;
         Ok(Runner {

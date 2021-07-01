@@ -21,10 +21,14 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="fixed stop event">
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="set server id">
+      <change afterPath="$PROJECT_DIR$/src/pkg/event.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/event/mod.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkg/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkg/mod.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,14 +240,7 @@
       <workItem from="1624842536612" duration="9184000" />
       <workItem from="1624951886233" duration="5755000" />
       <workItem from="1625016651763" duration="26106000" />
-      <workItem from="1625103174773" duration="8128000" />
-    </task>
-    <task id="LOCAL-00002" summary="get conn">
-      <created>1608689153374</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1608689153374</updated>
+      <workItem from="1625103174773" duration="10261000" />
     </task>
     <task id="LOCAL-00003" summary="get conn">
       <created>1608689360812</created>
@@ -581,7 +578,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625110168562</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="set server id">
+      <created>1625118357015</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1625118357015</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -624,7 +628,8 @@
     <MESSAGE value="parse json" />
     <MESSAGE value="suporrt gtid" />
     <MESSAGE value="fixed stop event" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed stop event" />
+    <MESSAGE value="set server id" />
+    <option name="LAST_COMMIT_MESSAGE" value="set server id" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

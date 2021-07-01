@@ -122,7 +122,7 @@ impl Runner {
             match self.read_packet() {
                 Ok(data) => {
                     // parse Header
-                    match mysql_binlog::event::EventData::parse_header(&data[1..]).unwrap() {
+                    match mysql_binlog::event::EventData::parse_header(&data[1..])? {
                         Some(EventHeader {
                             event_type: typ, ..
                         }) => match typ {
@@ -235,9 +235,7 @@ impl Runner {
 #[test]
 fn test_conn_progress() {
     let mut runner = Runner::new("mysql://root:123456@127.0.0.1:3306").unwrap();
-    runner.register_slave().unwrap();
-    runner.write_register_slave_command().unwrap();
-    runner.enable_semi_sync().unwrap();
+    runner.prepare().unwrap();
     runner
         .start_sync(OffsetConfig {
             pos: Some(("mysql-bin.000132".to_string(), 194)),

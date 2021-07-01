@@ -1,7 +1,7 @@
 use mysqlbinlog_network::client::sync::{OffsetConfig, Runner};
 
 fn main() {
-    let mut runner = Runner::new("mysql://root:123456@127.0.0.1:3306", 789).unwrap();
+    let mut runner = Runner::new("mysql://root:123456@127.0.0.1:3306", 1111).unwrap();
     runner
         .start_sync(OffsetConfig {
             // pos: Some(("binlog.000002".to_string(), 34834)),

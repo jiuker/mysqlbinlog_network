@@ -22,7 +22,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="set server id">
-      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -234,14 +234,7 @@
       <workItem from="1624842536612" duration="9184000" />
       <workItem from="1624951886233" duration="5755000" />
       <workItem from="1625016651763" duration="26106000" />
-      <workItem from="1625103174773" duration="12421000" />
-    </task>
-    <task id="LOCAL-00009" summary="get conn">
-      <created>1608705536926</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1608705536926</updated>
+      <workItem from="1625103174773" duration="12504000" />
     </task>
     <task id="LOCAL-00010" summary="get conn">
       <created>1608706119257</created>
@@ -579,7 +572,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625122683952</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="set server id">
+      <created>1625122729833</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1625122729833</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

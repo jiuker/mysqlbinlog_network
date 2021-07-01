@@ -24,6 +24,7 @@ pub struct Runner {
     opt: Opts,
     server_id: u32,
     table_map: TableMap,
+    binlog_checksum_length: usize, // if checksum , length = 4
 }
 impl Deref for Runner {
     type Target = Conn;
@@ -46,6 +47,7 @@ impl Runner {
             opt,
             server_id,
             table_map: TableMap::new(),
+            binlog_checksum_length: 0,
         })
     }
     fn prepare(&mut self) -> Result<()> {
@@ -118,7 +120,6 @@ impl Runner {
         Ok(())
     }
     pub fn get_event(&mut self) -> Result<()> {
-        let mut binlog_checksum_length = 0;
         loop {
             match self.read_packet() {
                 Ok(data) => {
@@ -131,7 +132,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - binlog_checksum_length],
+                                        ..data.len() - self.binlog_checksum_length],
                                     Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
@@ -140,7 +141,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - binlog_checksum_length],
+                                        ..data.len() - self.binlog_checksum_length],
                                     Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
@@ -149,7 +150,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - binlog_checksum_length],
+                                        ..data.len() - self.binlog_checksum_length],
                                     Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
@@ -158,7 +159,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - binlog_checksum_length],
+                                        ..data.len() - self.binlog_checksum_length],
                                     Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
@@ -183,7 +184,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - binlog_checksum_length],
+                                        ..data.len() - self.binlog_checksum_length],
                                     Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
@@ -200,10 +201,10 @@ impl Runner {
                                 }) = event
                                 {
                                     match ca {
-                                        ChecksumAlgorithm::None => binlog_checksum_length = 0,
-                                        ChecksumAlgorithm::CRC32 => binlog_checksum_length = 4,
+                                        ChecksumAlgorithm::None => self.binlog_checksum_length = 0,
+                                        ChecksumAlgorithm::CRC32 => self.binlog_checksum_length = 4,
                                         ChecksumAlgorithm::Other(size) => {
-                                            binlog_checksum_length = size as usize
+                                            self.binlog_checksum_length = size as usize
                                         }
                                     }
                                 }
@@ -212,7 +213,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - binlog_checksum_length],
+                                        ..data.len() - self.binlog_checksum_length],
                                     Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event)

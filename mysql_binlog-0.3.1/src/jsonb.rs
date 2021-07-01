@@ -188,9 +188,8 @@ fn parse_compound(
                 _ => false,
             };
             if is_inline {
-                let data = cursor.get_ref()[entry_offset + 1..entry_offset + value_entry_size + 1]
-                    .to_vec();
-                let mut cur = Cursor::new(data);
+                let data = &cursor.get_ref()[entry_offset + 1..entry_offset + value_entry_size + 1];
+                let mut cur = Cursor::new(data.to_vec());
                 let value = parse_any(&mut cur)?;
                 rsl.push(value);
                 continue;
@@ -204,7 +203,7 @@ fn parse_compound(
                 return Ok(JsonValue::Null);
             }
             let mut data = vec![tp_data_c];
-            data.extend_from_slice(&mut cursor.get_ref()[value_offset + 1..data_length].to_vec());
+            data.extend_from_slice(&cursor.get_ref()[value_offset + 1..data_length]);
             let mut cur = Cursor::new(data);
             let value = parse_any(&mut cur)?;
             rsl.push(value);

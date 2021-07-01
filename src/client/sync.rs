@@ -23,6 +23,7 @@ pub struct Runner {
     conn: Conn,
     opt: Opts,
     server_id: u32,
+    table_map: TableMap,
 }
 impl Deref for Runner {
     type Target = Conn;
@@ -44,6 +45,7 @@ impl Runner {
             conn,
             opt,
             server_id,
+            table_map: TableMap::new(),
         })
     }
     fn prepare(&mut self) -> Result<()> {
@@ -106,7 +108,7 @@ impl Runner {
             data.write_all("".as_bytes())?;
             data.write_u64::<LittleEndian>(4)?;
             let gtid = none_ref!(offset.gtid);
-            let mut gtiddata = gtid.encode()?;
+            let gtiddata = gtid.encode()?;
             data.write_u32::<LittleEndian>(gtiddata.len() as u32)?;
             data.write_all(gtiddata.as_slice())?;
             self.write_command(Command::COM_BINLOG_DUMP_GTID, data.as_slice())?;
@@ -116,7 +118,6 @@ impl Runner {
         Ok(())
     }
     pub fn get_event(&mut self) -> Result<()> {
-        let mut table_map = TableMap::new();
         let mut binlog_checksum_length = 0;
         loop {
             match self.read_packet() {
@@ -131,7 +132,7 @@ impl Runner {
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
                                         ..data.len() - binlog_checksum_length],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
                             }
@@ -140,7 +141,7 @@ impl Runner {
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
                                         ..data.len() - binlog_checksum_length],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
                             }
@@ -149,7 +150,7 @@ impl Runner {
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
                                         ..data.len() - binlog_checksum_length],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
                             }
@@ -158,7 +159,7 @@ impl Runner {
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
                                         ..data.len() - binlog_checksum_length],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
                                 if let Some(e) = event {
@@ -169,7 +170,7 @@ impl Runner {
                                             table_name: d3,
                                             columns: d4,
                                             ..
-                                        } => table_map.handle(d1, d2, d3, d4),
+                                        } => self.table_map.handle(d1, d2, d3, d4),
                                         _ => {
                                             println!("nop")
                                         }
@@ -183,7 +184,7 @@ impl Runner {
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
                                         ..data.len() - binlog_checksum_length],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event);
                             }
@@ -191,7 +192,7 @@ impl Runner {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1..data.len()],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 if let Some(FormatDescriptionEvent {
                                     checksum_algorithm: ca,
@@ -212,7 +213,7 @@ impl Runner {
                                     typ,
                                     &data[EVENT_HEADER_SIZE + 1
                                         ..data.len() - binlog_checksum_length],
-                                    Some(&table_map),
+                                    Some(&self.table_map),
                                 )?;
                                 println!("end:        {:?}", event)
                             }
@@ -234,7 +235,7 @@ impl Runner {
 
 #[test]
 fn test_conn_progress() {
-    let mut runner = Runner::new("mysql://root:123456@127.0.0.1:3306").unwrap();
+    let mut runner = Runner::new("mysql://root:123456@127.0.0.1:3306", 1111).unwrap();
     runner.prepare().unwrap();
     runner
         .start_sync(OffsetConfig {

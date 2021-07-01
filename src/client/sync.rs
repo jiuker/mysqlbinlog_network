@@ -1,5 +1,6 @@
 use crate::none;
 use crate::none_ref;
+use crate::pkg::mysql_gtid::Gtid;
 use byteorder::{LittleEndian, WriteBytesExt};
 use mysql::consts::Command;
 use mysql::prelude::Queryable;
@@ -13,9 +14,9 @@ use std::ops::{Deref, DerefMut};
 use std::result;
 use std::str::FromStr;
 
-pub struct OffsetConfig<'a> {
+pub struct OffsetConfig {
     pub pos: Option<(String, u32)>,
-    pub gtid: Option<Vec<(&'a str, Vec<(i64, i64)>)>>,
+    pub gtid: Option<Gtid>,
 }
 type Result<T> = result::Result<T, Box<dyn Error>>;
 pub struct Runner {
@@ -82,7 +83,7 @@ impl Runner {
         self.query_drop("SET @rpl_semi_sync_slave = 1;")?;
         Ok(())
     }
-    pub fn write_dump_cmd(&mut self, offset: OffsetConfig) -> Result<()> {
+    pub fn start_sync(&mut self, offset: OffsetConfig) -> Result<()> {
         if offset.pos.is_some() {
             self.prepare()?;
             let mut data = vec![0u8; 0];
@@ -100,19 +101,7 @@ impl Runner {
             data.write_all("".as_bytes())?;
             data.write_u64::<LittleEndian>(4)?;
             let gtid = none_ref!(offset.gtid);
-            let mut gtiddata = vec![0u8; 0];
-            gtiddata.write_u64::<LittleEndian>(gtid.len() as u64)?;
-            for i in 0..gtid.len() {
-                let item = none!(gtid.get(i));
-                let uid = uuid::Uuid::from_str(&item.0)?;
-                gtiddata.write_all(uid.as_bytes())?;
-                gtiddata.write_i64::<LittleEndian>(item.1.len() as i64)?;
-                for ii in 0..item.1.len() {
-                    let i_item = none!(item.1.get(ii));
-                    gtiddata.write_i64::<LittleEndian>(i_item.0)?;
-                    gtiddata.write_i64::<LittleEndian>(i_item.1)?;
-                }
-            }
+            let mut gtiddata = gtid.encode()?;
             data.write_u32::<LittleEndian>(gtiddata.len() as u32)?;
             data.write_all(gtiddata.as_slice())?;
             self.write_command(Command::COM_BINLOG_DUMP_GTID, data.as_slice())?;
@@ -243,7 +232,7 @@ fn test_conn_progress() {
     runner.write_register_slave_command().unwrap();
     runner.enable_semi_sync().unwrap();
     runner
-        .write_dump_cmd(OffsetConfig {
+        .start_sync(OffsetConfig {
             pos: Some(("mysql-bin.000132".to_string(), 194)),
             gtid: None,
         })

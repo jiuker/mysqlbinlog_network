@@ -21,7 +21,14 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="suporrt gtid" />
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="suporrt gtid">
+      <change afterPath="$PROJECT_DIR$/src/pkg/mysql_gtid.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkg/err.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkg/err.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkg/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkg/mod.rs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -82,6 +89,11 @@
     </key>
   </component>
   <component name="RunManager" selected="Cargo.Run mysqlbinlog-network">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run mysqlbinlog-network" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package mysqlbinlog-network --bin mysqlbinlog-network" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -130,8 +142,8 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test event::event::test_calc_version_product" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package mysqlbinlog-network --lib event::event::test_calc_version_product -- --exact" />
+    <configuration name="Test pkg::mysql_gtid::test_gtid_from" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
+      <option name="command" value="test --package mysqlbinlog-network --lib pkg::mysql_gtid::test_gtid_from -- --exact" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
       <option name="requiredFeatures" value="true" />
@@ -178,18 +190,13 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Run mysqlbinlog-network" />
+        <item itemvalue="Cargo.Test pkg::mysql_gtid::test_gtid_from" />
         <item itemvalue="Cargo.Test client::sync::test_conn_progress" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build" />
-        <item itemvalue="Cargo.Test event::event::test_calc_version_product" />
       </list>
     </recent_temporary>
   </component>
@@ -232,6 +239,7 @@
       <workItem from="1624842536612" duration="9184000" />
       <workItem from="1624951886233" duration="5755000" />
       <workItem from="1625016651763" duration="26106000" />
+      <workItem from="1625103174773" duration="5706000" />
     </task>
     <task id="LOCAL-00001" summary="first import">
       <created>1608685967222</created>

@@ -133,7 +133,8 @@ impl Runner {
                             mysql_binlog::event::TypeCode::RotateEvent => {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
-                                    &data[EVENT_HEADER_SIZE + 1..data.len()],
+                                    &data[EVENT_HEADER_SIZE + 1
+                                        ..data.len() - binlog_checksum_length],
                                     Some(&table_map),
                                 )?;
                                 println!("end:        {:?}", event);
@@ -150,7 +151,8 @@ impl Runner {
                             mysql_binlog::event::TypeCode::TableMapEvent => {
                                 let event = mysql_binlog::event::EventData::from_data(
                                     typ,
-                                    &data[EVENT_HEADER_SIZE + 1..],
+                                    &data[EVENT_HEADER_SIZE + 1
+                                        ..data.len() - binlog_checksum_length],
                                     Some(&table_map),
                                 )?;
                                 println!("end:        {:?}", event);

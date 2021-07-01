@@ -6,7 +6,7 @@ fn main() {
         .start_sync(OffsetConfig {
             // pos: Some(("binlog.000002".to_string(), 34834)),
             pos: None,
-            gtid: Some("0575a804-6403-11ea-8d3d-e454e8d4a4fe:1-1467868".into()),
+            gtid: Some("0575a804-6403-11ea-8d3d-e454e8d4a4fe:1-1467870".into()),
         })
         .unwrap();
     runner.get_event().unwrap();

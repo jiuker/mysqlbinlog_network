@@ -41,6 +41,89 @@ fn main() {
         dbg!(e);
     }
 }
+output:
+
+[src/main.rs:14] e = Event {
+        header: EventHeader {
+        timestamp: 0,
+        event_type: RotateEvent,
+        server_id: 2,
+        event_size: 43,
+        log_pos: 0,
+        flags: 32,
+    },
+    event: Some(
+        RotateEvent {
+            pos: 4,
+            next_log_name: "mysql-bin.000132",
+        },
+    ),
+}
+[src/main.rs:14] e = Event {
+        header: EventHeader {
+        timestamp: 1625022967,
+        event_type: FormatDescriptionEvent,
+        server_id: 2,
+        event_size: 119,
+        log_pos: 123,
+        flags: 0,
+    },
+    event: Some(
+        FormatDescriptionEvent {
+            binlog_version: 4,
+            server_version: "5.7.29-log",
+            create_timestamp: 0,
+            common_header_len: 19,
+            checksum_algorithm: CRC32,
+        },
+    ),
+}
+[src/main.rs:14] e = Event {
+            header: EventHeader {
+            timestamp: 1625022967,
+            event_type: PreviousGtidsLogEvent,
+            server_id: 2,
+            event_size: 71,
+            log_pos: 194,
+            flags: 128,
+        },
+        event: None,
+    }
+[src/main.rs:14] e = Event {
+        header: EventHeader {
+            timestamp: 0,
+            event_type: HeartbeatLogEvent,
+            server_id: 2,
+            event_size: 39,
+            log_pos: 4178350,
+            flags: 0,
+        },
+        event: None,
+    }
+[src/main.rs:14] e = Event {
+        header: EventHeader {
+        timestamp: 1625047157,
+        event_type: GtidLogEvent,
+        server_id: 2,
+        event_size: 65,
+        log_pos: 4178415,
+        flags: 0,
+    },
+    event: Some(
+            GtidLogEvent {
+                flags: 0,
+                uuid: 0575a804-6403-11ea-8d3d-e454e8d4a4fe,
+                coordinate: 1467870,
+                last_committed: Some(
+                    4662,
+                ),
+                sequence_number: Some(
+                    4663,
+                ),
+            },
+        ),
+    }
+...
 
 ```
 
@@ -90,7 +173,7 @@ AnonymousGtidLogEvent|- []
 PreviousGtidsLogEvent|- []
 OtherUnknown(u8)|- []
 
-Not support Means Event Will Not Parse!
+Not support Means Event Will Not Parse!But Event Header Will Can Tell It!
 ## License
 
 Licensed under either of

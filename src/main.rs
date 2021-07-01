@@ -9,5 +9,8 @@ fn main() {
             gtid: Some("0575a804-6403-11ea-8d3d-e454e8d4a4fe:1-1467870".into()),
         })
         .unwrap();
-    runner.get_event().unwrap();
+    loop {
+        let e = runner.get_event().unwrap();
+        dbg!(e);
+    }
 }

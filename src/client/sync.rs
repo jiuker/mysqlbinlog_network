@@ -22,6 +22,7 @@ type Result<T> = result::Result<T, Box<dyn Error>>;
 pub struct Runner {
     conn: Conn,
     opt: Opts,
+    server_id: u32,
 }
 impl Deref for Runner {
     type Target = Conn;
@@ -35,11 +36,15 @@ impl DerefMut for Runner {
     }
 }
 impl Runner {
-    pub fn new(url: &str) -> Result<Self> {
+    pub fn new(url: &str, server_id: u32) -> Result<Self> {
         // mysql://us%20r:p%20w@localhost:3308
         let opt = mysql::Opts::from_url(url)?;
         let conn = mysql::Conn::new(opt.clone())?;
-        Ok(Runner { conn, opt })
+        Ok(Runner {
+            conn,
+            opt,
+            server_id,
+        })
     }
     fn prepare(&mut self) -> Result<()> {
         self.register_slave()?;
@@ -62,14 +67,14 @@ impl Runner {
         let h_name = sys_info::hostname()?;
         let mut data = vec![0u8; 0];
         // slave
-        data.write_u32::<LittleEndian>(789)?;
+        data.write_u32::<LittleEndian>(self.server_id)?;
         data.write_u8(h_name.len() as u8)?;
         data.write_all(h_name.as_bytes())?;
         data.write_u8(none!(self.opt.get_user()).len() as u8)?;
         data.write_all(none!(self.opt.get_user()).as_bytes())?;
         data.write_u8(none!(self.opt.get_pass()).len() as u8)?;
         data.write_all(none!(self.opt.get_pass()).as_bytes())?;
-        data.write_u16::<LittleEndian>(3306)?;
+        data.write_u16::<LittleEndian>(self.opt.get_tcp_port())?;
         data.write_u32::<LittleEndian>(0)?;
         data.write_u32::<LittleEndian>(0)?;
         self.write_command(Command::COM_REGISTER_SLAVE, data.as_slice())?;
@@ -89,14 +94,14 @@ impl Runner {
             let mut data = vec![0u8; 0];
             data.write_u32::<LittleEndian>(none_ref!(offset.pos).1)?;
             data.write_u16::<LittleEndian>(0)?;
-            data.write_u32::<LittleEndian>(789)?;
+            data.write_u32::<LittleEndian>(self.server_id)?;
             data.write_all(none_ref!(offset.pos).0.as_bytes())?;
             self.write_command(Command::COM_BINLOG_DUMP, data.as_slice())?;
         } else if offset.gtid.is_some() {
             self.prepare()?;
             let mut data = vec![0u8; 0];
             data.write_u16::<LittleEndian>(0)?;
-            data.write_u32::<LittleEndian>(789)?;
+            data.write_u32::<LittleEndian>(self.server_id)?;
             data.write_u32::<LittleEndian>("".len() as u32)?;
             data.write_all("".as_bytes())?;
             data.write_u64::<LittleEndian>(4)?;

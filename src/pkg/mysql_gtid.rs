@@ -9,18 +9,18 @@ pub struct Gtid(HashMap<String, Vec<(i64, i64)>>);
 
 impl Gtid {
     pub fn encode(&self) -> Result<Vec<u8>> {
-        let mut gtiddata = vec![0u8; 0];
-        gtiddata.write_u64::<LittleEndian>(self.0.len() as u64)?;
+        let mut gtid_data = vec![0u8; 0];
+        gtid_data.write_u64::<LittleEndian>(self.0.len() as u64)?;
         for (id, range) in &self.0 {
             let uid = uuid::Uuid::from_str(id)?;
-            gtiddata.write_all(uid.as_bytes())?;
-            gtiddata.write_i64::<LittleEndian>(range.len() as i64)?;
+            gtid_data.write_all(uid.as_bytes())?;
+            gtid_data.write_i64::<LittleEndian>(range.len() as i64)?;
             for i_item in range {
-                gtiddata.write_i64::<LittleEndian>(i_item.0)?;
-                gtiddata.write_i64::<LittleEndian>(i_item.1)?;
+                gtid_data.write_i64::<LittleEndian>(i_item.0)?;
+                gtid_data.write_i64::<LittleEndian>(i_item.1)?;
             }
         }
-        Ok(gtiddata)
+        Ok(gtid_data)
     }
     // todo
     pub fn update_gitd(&mut self, _other: &Gtid) {}

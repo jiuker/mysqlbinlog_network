@@ -21,9 +21,8 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="server">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="1.0.1">
+      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,13 +236,6 @@
       <workItem from="1625016651763" duration="26106000" />
       <workItem from="1625103174773" duration="15625000" />
       <workItem from="1625189918507" duration="73000" />
-    </task>
-    <task id="LOCAL-00012" summary="get conn">
-      <created>1608714951997</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1608714951997</updated>
     </task>
     <task id="LOCAL-00013" summary="get conn">
       <created>1608715113757</created>
@@ -581,7 +573,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625125566421</updated>
     </task>
-    <option name="localTasksCounter" value="61" />
+    <task id="LOCAL-00061" summary="1.0.1">
+      <created>1625192401727</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1625192401727</updated>
+    </task>
+    <option name="localTasksCounter" value="62" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -625,7 +624,8 @@
     <MESSAGE value="suporrt gtid" />
     <MESSAGE value="fixed stop event" />
     <MESSAGE value="set server id" />
-    <option name="LAST_COMMIT_MESSAGE" value="set server id" />
+    <MESSAGE value="1.0.1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0.1" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

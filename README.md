@@ -17,7 +17,7 @@ Put the desired version of the crate into the `dependencies` section of your `Ca
 
 ```toml
 [dependencies]
-mysqlbinglog_network = "*"
+mysqlbinlog-network = {git="https://github.com/jiuker/mysqlbinlog_network"}
 ```
 
 ### Example
@@ -133,45 +133,43 @@ Please refer to the [crate docs].
 
 ## Event
 
-Event|support
---|--:
-Unknown|- []
-StartEventV3|- [x]
-QueryEvent|- [x]
-StopEvent|- [x]
-RotateEvent|- [x]
-IntvarEvent|- []
-LoadEvent|- []
-SlaveEvent|- []
-CreateFileEvent|- []
-AppendBlockEvent|- []
-ExecLoadEvent|- []
-DeleteFileEvent|- []
-NewLoadEvent|- []
-RandEvent|- []
-UserVarEvent|- []
-FormatDescriptionEvent|- [x]
-XidEvent|- [x]
-BeginLoadQueryEvent|- [x]
-ExecuteLoadQueryEvent|- [x]
-TableMapEvent|- [x]
-PreGaWriteRowsEvent|- []
-PreGaUpdateRowsEvent|- []
-PreGaDeleteRowsEvent|- []
-WriteRowsEventV1|- [x]
-UpdateRowsEventV1|- [x]
-DeleteRowsEventV1|- [x]
-IncidentEvent|- []
-HeartbeatLogEvent|- [x]
-IgnorableLogEvent|- []
-RowsQueryLogEvent|- [x]
-WriteRowsEventV2|- [x]
-UpdateRowsEventV2|- [x]
-DeleteRowsEventV2|- [x]
-GtidLogEvent|- [x]
-AnonymousGtidLogEvent|- []
-PreviousGtidsLogEvent|- []
-OtherUnknown(u8)|- []
+- [] Unknown
+- [x] StartEventV3
+- [x] QueryEvent
+- [x] StopEvent
+- [x] RotateEvent
+- [] IntvarEvent
+- [] LoadEvent
+- [] SlaveEvent
+- [] CreateFileEvent
+- [] AppendBlockEvent
+- [] ExecLoadEvent
+- [] DeleteFileEvent
+- [] NewLoadEvent
+- [] RandEvent
+- [] UserVarEvent
+- [x] FormatDescriptionEvent
+- [x] XidEvent
+- [x] BeginLoadQueryEvent
+- [x] ExecuteLoadQueryEvent
+- [x] TableMapEvent
+- [] PreGaWriteRowsEvent
+- [] PreGaUpdateRowsEvent
+- [] PreGaDeleteRowsEvent
+- [x] WriteRowsEventV1
+- [x] UpdateRowsEventV1
+- [x] DeleteRowsEventV1
+- [] IncidentEvent
+- [x] HeartbeatLogEvent
+- [] IgnorableLogEvent
+- [x] RowsQueryLogEvent
+- [x] WriteRowsEventV2
+- [x] UpdateRowsEventV2
+- [x] DeleteRowsEventV2
+- [x] GtidLogEvent
+- [] AnonymousGtidLogEvent
+- [] PreviousGtidsLogEvent
+- [x] OtherUnknown(u8)|
 
 Not support Means Event Will Not Parse!But Event Header Will Can Tell It!
 ## License

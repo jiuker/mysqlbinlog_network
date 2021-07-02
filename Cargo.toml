@@ -1,8 +1,14 @@
 [package]
 name = "mysqlbinlog-network"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["jiuker <guozhi.li@dmall.com>"]
 edition = "2018"
+license = "MIT/Apache-2.0"
+description = "mysqlbinlog from MySQL instance"
+documentation = "https://docs.rs/mysqlbinlog-network"
+keywords = ["binlog", "mysql"]
+categories = ["binlog"]
+repository = "https://github.com/jiuker/mysqlbinlog_network"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

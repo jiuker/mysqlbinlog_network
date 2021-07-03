@@ -1,4 +1,4 @@
-# mysqlbinglog_network
+# mysqlbinlog_network
 
 This create offers:
 

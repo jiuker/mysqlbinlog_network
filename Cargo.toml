@@ -1,6 +1,6 @@
 [package]
 name = "mysqlbinlog-network"
-version = "1.0.2"
+version = "1.0.3"
 authors = ["jiuker <guozhi.li@dmall.com>"]
 edition = "2018"
 license = "MIT/Apache-2.0"
@@ -9,7 +9,7 @@ documentation = "https://docs.rs/mysqlbinlog-network"
 keywords = ["binlog", "mysql"]
 categories = ["database"]
 repository = "https://github.com/jiuker/mysqlbinlog_network"
-
+include = [ "./mysql_binlog-0.3.1/*","./mysql-20.1.0/*"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -22,3 +22,4 @@ mysql = "20.1.0"
 [patch.crates-io]
 mysql_binlog = {path="./mysql_binlog-0.3.1"}
 mysql = {path = "./mysql-20.1.0"}
+

@@ -14,7 +14,7 @@
   </component>
   <component name="CMakeSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="CargoProjects">
@@ -22,7 +22,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="1.0.1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +67,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
@@ -83,126 +87,96 @@
       <recent name="$PROJECT_DIR$/src/pkg" />
     </key>
   </component>
-  <component name="RunManager" selected="Cargo.Run mysqlbinlog-network">
+  <component name="RunManager" selected="Cargo Command.Run">
     <configuration name="Run mysqlbinlog-network" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package mysqlbinlog-network --bin mysqlbinlog-network" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
+      <option name="command" value="run --package mysqlbinlog-network --bin mysqlbinlog-network" />
       <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="Run" type="CargoCommandRunConfiguration" factoryName="Cargo Command">
-      <option name="command" value="run --package drcDamllMysql --bin drcDamllMysql" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
+      <option name="command" value="run --package drcDamllMysql --bin drcDamllMysql" />
       <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="Test client::sync::test_conn_progress" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package mysqlbinlog-network --lib client::sync::test_conn_progress -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
+      <option name="command" value="test --package mysqlbinlog-network --lib client::sync::test_conn_progress -- --exact" />
       <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="Test pkg::mysql_gtid::test_gtid_from" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="test --package mysqlbinlog-network --lib pkg::mysql_gtid::test_gtid_from -- --exact" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
+      <option name="command" value="test --package mysqlbinlog-network --lib pkg::mysql_gtid::test_gtid_from -- --exact" />
       <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="build" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="build --package drcDamllMysql --lib" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
+      <option name="command" value="build --package drcDamllMysql --lib" />
       <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
     <configuration name="run" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
-      <option name="command" value="run --package drcDamllMysql --bin drcDamllMysql" />
-      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <option name="channel" value="DEFAULT" />
-      <option name="requiredFeatures" value="true" />
+      <option name="command" value="run --package drcDamllMysql --bin drcDamllMysql" />
       <option name="allFeatures" value="false" />
+      <option name="nocapture" value="false" />
       <option name="emulateTerminal" value="false" />
-      <option name="withSudo" value="false" />
       <option name="backtrace" value="SHORT" />
+      <option name="workingDirectory" value="file://$PROJECT_DIR$" />
       <envs />
-      <option name="isRedirectInput" value="false" />
-      <option name="redirectInputPath" value="" />
       <method v="2">
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Cargo.Run mysqlbinlog-network" />
-        <item itemvalue="Cargo.Test pkg::mysql_gtid::test_gtid_from" />
-        <item itemvalue="Cargo.Test client::sync::test_conn_progress" />
-        <item itemvalue="Cargo.run" />
-        <item itemvalue="Cargo.build" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="RustProjectSettings">
     <option name="externalLinter" value="Clippy" />
     <option name="runRustfmtOnSave" value="true" />
     <option name="toolchainHomeDirectory" value="$USER_HOME$/.cargo/bin" />
-    <option name="useRustfmt" value="true" />
     <option name="version" value="2" />
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="" />
@@ -236,6 +210,7 @@
       <workItem from="1625016651763" duration="26106000" />
       <workItem from="1625103174773" duration="15625000" />
       <workItem from="1625189918507" duration="73000" />
+      <workItem from="1625297904829" duration="1087000" />
     </task>
     <task id="LOCAL-00013" summary="get conn">
       <created>1608715113757</created>
@@ -584,7 +559,7 @@
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.History.Properties">
     <option name="COLUMN_ID_ORDER">
@@ -626,6 +601,12 @@
     <MESSAGE value="set server id" />
     <MESSAGE value="1.0.1" />
     <option name="LAST_COMMIT_MESSAGE" value="1.0.1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="370" y="115" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1625297936428">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="370" y="115" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.768@0.0.1366.768" timestamp="1625297936428" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

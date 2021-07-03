@@ -21,11 +21,10 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="1.0.1">
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,10 +68,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../redisTest" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -211,13 +211,7 @@
       <workItem from="1625103174773" duration="15625000" />
       <workItem from="1625189918507" duration="73000" />
       <workItem from="1625297904829" duration="1087000" />
-    </task>
-    <task id="LOCAL-00013" summary="get conn">
-      <created>1608715113757</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1608715113757</updated>
+      <workItem from="1625299175485" duration="1267000" />
     </task>
     <task id="LOCAL-00014" summary="get conn">
       <created>1608716112973</created>
@@ -555,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625192401727</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="1.0.3">
+      <created>1625299357935</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1625299357936</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -600,13 +601,26 @@
     <MESSAGE value="fixed stop event" />
     <MESSAGE value="set server id" />
     <MESSAGE value="1.0.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.0.1" />
+    <MESSAGE value="1.0.3" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0.3" />
   </component>
   <component name="WindowStateProjectService">
     <state x="370" y="115" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1625297936428">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="370" y="115" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.768@0.0.1366.768" timestamp="1625297936428" />
+    <state x="162" y="0" width="1034" height="768" key="CommitChangelistDialog2" timestamp="1625299357747">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="162" y="0" width="1034" height="768" key="CommitChangelistDialog2/0.0.1366.768@0.0.1366.768" timestamp="1625299357747" />
+    <state x="448" y="136" key="FileChooserDialogImpl" timestamp="1625299710222">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="448" y="136" key="FileChooserDialogImpl/0.0.1366.768@0.0.1366.768" timestamp="1625299710222" />
+    <state x="282" y="114" key="Vcs.Push.Dialog.v2" timestamp="1625299362844">
+      <screen x="0" y="0" width="1366" height="768" />
+    </state>
+    <state x="282" y="114" key="Vcs.Push.Dialog.v2/0.0.1366.768@0.0.1366.768" timestamp="1625299362844" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -9,7 +9,6 @@ documentation = "https://docs.rs/mysqlbinlog-network"
 keywords = ["binlog", "mysql"]
 categories = ["database"]
 repository = "https://github.com/jiuker/mysqlbinlog_network"
-include = [ "mysql_binlog-0.3.1/src/*","mysql-20.1.0/src/*","Cargo.toml","src/*",".gitignore"]
 
 [lib]
 name = "mysqlbinlog_network"

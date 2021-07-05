@@ -468,7 +468,7 @@ dependencies = [
 
 [[package]]
 name = "mysqlbinlog-network"
-version = "1.0.8"
+version = "1.0.9"
 dependencies = [
  "assert_matches",
  "base64 0.12.3",

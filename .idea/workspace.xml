@@ -22,7 +22,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="1.0.1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,13 +239,11 @@
       <workItem from="1625016651763" duration="26106000" />
       <workItem from="1625103174773" duration="15625000" />
       <workItem from="1625189918507" duration="73000" />
-    </task>
-    <task id="LOCAL-00013" summary="get conn">
-      <created>1608715113757</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1608715113757</updated>
+      <workItem from="1625193083911" duration="9000" />
+      <workItem from="1625194129605" duration="839000" />
+      <workItem from="1625218666635" duration="410000" />
+      <workItem from="1625219773717" duration="1416000" />
+      <workItem from="1625451074161" duration="1654000" />
     </task>
     <task id="LOCAL-00014" summary="get conn">
       <created>1608716112973</created>
@@ -580,7 +581,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625192401727</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="1.0.1">
+      <created>1625192870595</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1625192870596</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -626,6 +634,17 @@
     <MESSAGE value="set server id" />
     <MESSAGE value="1.0.1" />
     <option name="LAST_COMMIT_MESSAGE" value="1.0.1" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/client/sync.rs</url>
+          <line>248</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

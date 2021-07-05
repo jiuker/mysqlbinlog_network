@@ -2,7 +2,7 @@ use crate::none;
 use crate::none_ref;
 use crate::pkg::event::Event;
 use crate::pkg::mysql_gtid::Gtid;
-use byteorder::{LittleEndian, WriteBytesExt};
+use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use mysql::consts::Command;
 use mysql::prelude::Queryable;
 use mysql::{Conn, Opts};
@@ -10,7 +10,7 @@ use mysql_binlog::event::EventData::{EventHeader, FormatDescriptionEvent};
 use mysql_binlog::event::{ChecksumAlgorithm, EVENT_HEADER_SIZE};
 use mysql_binlog::table_map::TableMap;
 use std::error::Error;
-use std::io::Write;
+use std::io::{Cursor, Read, Write};
 use std::ops::{Deref, DerefMut};
 use std::result;
 use std::str::FromStr;
@@ -119,134 +119,144 @@ impl Runner {
         }
         Ok(())
     }
-    pub fn get_event(&mut self) -> Result<Event> {
+    fn parse_event(&mut self, data: Vec<u8>) -> Result<Event> {
         let header: mysql_binlog::event::EventData;
-        match self.read_packet() {
-            Ok(data) => {
-                // parse Header
-                match mysql_binlog::event::EventData::parse_header(&data[1..])? {
-                    Some(EventHeader {
-                        timestamp,
-                        event_type: typ,
-                        server_id,
-                        event_size,
-                        log_pos,
-                        flags,
-                    }) => {
-                        header = mysql_binlog::event::EventData::EventHeader {
-                            timestamp,
-                            event_type: typ,
-                            server_id,
-                            event_size,
-                            log_pos,
-                            flags,
-                        };
-                        match typ {
-                            mysql_binlog::event::TypeCode::XidEvent => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - self.binlog_checksum_length],
-                                    Some(&self.table_map),
-                                )?;
-                                Ok(Event { header, event })
-                            }
-                            mysql_binlog::event::TypeCode::RotateEvent => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - self.binlog_checksum_length],
-                                    Some(&self.table_map),
-                                )?;
-                                Ok(Event { header, event })
-                            }
-                            mysql_binlog::event::TypeCode::QueryEvent => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - self.binlog_checksum_length],
-                                    Some(&self.table_map),
-                                )?;
-                                Ok(Event { header, event })
-                            }
-                            mysql_binlog::event::TypeCode::TableMapEvent => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - self.binlog_checksum_length],
-                                    Some(&self.table_map),
-                                )?;
-                                if let Some(ref e) = event {
-                                    match e {
-                                        mysql_binlog::event::EventData::TableMapEvent {
-                                            table_id: d1,
-                                            schema_name: d2,
-                                            table_name: d3,
-                                            columns: d4,
-                                            ..
-                                        } => self.table_map.handle(
-                                            *d1,
-                                            d2.clone(),
-                                            d3.clone(),
-                                            d4.clone(),
-                                        ),
-                                        _ => {
-                                            println!("nop")
-                                        }
-                                    }
-                                }
-                                Ok(Event { header, event })
-                            }
-                            mysql_binlog::event::TypeCode::UpdateRowsEventV2
-                            | mysql_binlog::event::TypeCode::WriteRowsEventV2
-                            | mysql_binlog::event::TypeCode::DeleteRowsEventV2 => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - self.binlog_checksum_length],
-                                    Some(&self.table_map),
-                                )?;
-                                Ok(Event { header, event })
-                            }
-                            mysql_binlog::event::TypeCode::FormatDescriptionEvent => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1..data.len()],
-                                    Some(&self.table_map),
-                                )?;
-                                if let Some(FormatDescriptionEvent {
-                                    checksum_algorithm: ca,
+        // parse Header
+        match mysql_binlog::event::EventData::parse_header(&data[1..])? {
+            Some(EventHeader {
+                timestamp,
+                event_type: typ,
+                server_id,
+                event_size,
+                log_pos,
+                flags,
+            }) => {
+                header = mysql_binlog::event::EventData::EventHeader {
+                    timestamp,
+                    event_type: typ,
+                    server_id,
+                    event_size,
+                    log_pos,
+                    flags,
+                };
+                match typ {
+                    mysql_binlog::event::TypeCode::XidEvent => {
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len() - self.binlog_checksum_length],
+                            Some(&self.table_map),
+                        )?;
+                        Ok(Event { header, event })
+                    }
+                    mysql_binlog::event::TypeCode::RotateEvent => {
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len() - self.binlog_checksum_length],
+                            Some(&self.table_map),
+                        )?;
+                        Ok(Event { header, event })
+                    }
+                    mysql_binlog::event::TypeCode::QueryEvent => {
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len() - self.binlog_checksum_length],
+                            Some(&self.table_map),
+                        )?;
+                        Ok(Event { header, event })
+                    }
+                    mysql_binlog::event::TypeCode::TableMapEvent => {
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len() - self.binlog_checksum_length],
+                            Some(&self.table_map),
+                        )?;
+                        if let Some(ref e) = event {
+                            match e {
+                                mysql_binlog::event::EventData::TableMapEvent {
+                                    table_id: d1,
+                                    schema_name: d2,
+                                    table_name: d3,
+                                    columns: d4,
                                     ..
-                                }) = event.as_ref()
-                                {
-                                    match ca {
-                                        ChecksumAlgorithm::None => self.binlog_checksum_length = 0,
-                                        ChecksumAlgorithm::CRC32 => self.binlog_checksum_length = 4,
-                                        ChecksumAlgorithm::Other(size) => {
-                                            self.binlog_checksum_length = *size as usize
-                                        }
-                                    }
+                                } => self
+                                    .table_map
+                                    .handle(*d1, d2.clone(), d3.clone(), d4.clone()),
+                                _ => {
+                                    println!("nop")
                                 }
-                                Ok(Event { header, event })
-                            }
-                            _ => {
-                                let event = mysql_binlog::event::EventData::from_data(
-                                    typ,
-                                    &data[EVENT_HEADER_SIZE + 1
-                                        ..data.len() - self.binlog_checksum_length],
-                                    Some(&self.table_map),
-                                )?;
-                                Ok(Event { header, event })
                             }
                         }
+                        Ok(Event { header, event })
                     }
-                    None => Err(Box::from("io eof")),
+                    mysql_binlog::event::TypeCode::UpdateRowsEventV2
+                    | mysql_binlog::event::TypeCode::WriteRowsEventV2
+                    | mysql_binlog::event::TypeCode::DeleteRowsEventV2 => {
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len() - self.binlog_checksum_length],
+                            Some(&self.table_map),
+                        )?;
+                        Ok(Event { header, event })
+                    }
+                    mysql_binlog::event::TypeCode::FormatDescriptionEvent => {
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len()],
+                            Some(&self.table_map),
+                        )?;
+                        if let Some(FormatDescriptionEvent {
+                            checksum_algorithm: ca,
+                            ..
+                        }) = event.as_ref()
+                        {
+                            match ca {
+                                ChecksumAlgorithm::None => self.binlog_checksum_length = 0,
+                                ChecksumAlgorithm::CRC32 => self.binlog_checksum_length = 4,
+                                ChecksumAlgorithm::Other(size) => {
+                                    self.binlog_checksum_length = *size as usize
+                                }
+                            }
+                        }
+                        Ok(Event { header, event })
+                    }
                     _ => {
-                        unimplemented!("不应该出现的地方!");
+                        let event = mysql_binlog::event::EventData::from_data(
+                            typ,
+                            &data[EVENT_HEADER_SIZE + 1..data.len() - self.binlog_checksum_length],
+                            Some(&self.table_map),
+                        )?;
+                        Ok(Event { header, event })
                     }
                 }
             }
-            Err(e) => Err(Box::from(e.to_string())),
+            None => Err(Box::from("invalid event header")),
+            _ => Err(Box::from("parse event error")),
+        }
+    }
+    fn handle_error_packet(&mut self, data: Vec<u8>) -> Result<(u16, String, String)> {
+        let mut cursor = Cursor::new(data);
+        cursor.set_position(2);
+        let code = cursor.read_u16::<LittleEndian>()?;
+        let _ = cursor.read_u8()?;
+        let mut state = String::with_capacity(5);
+        cursor.read_to_string(&mut state)?;
+        let mut message = "".to_string();
+        cursor.read_to_string(&mut message);
+        Ok((code, state, message))
+    }
+    pub fn get_event(&mut self) -> Result<Event> {
+        loop {
+            match self.read_packet() {
+                Ok(data) => match none!(data.get(0)) {
+                    &0 => return self.parse_event(data),
+                    &0xff => {
+                        let (code, state, message) = self.handle_error_packet(data)?;
+                        return Err(Box::from(format!("{}{}:{}", code, state, message)));
+                    }
+                    &_ => continue,
+                },
+                Err(e) => return Err(Box::from(e.to_string())),
+            }
         }
     }
 }

@@ -1,6 +1,6 @@
 [package]
 name = "mysqlbinlog-network"
-version = "1.0.6"
+version = "1.0.7"
 authors = ["jiuker <guozhi.li@dmall.com>"]
 edition = "2018"
 license = "MIT/Apache-2.0"

@@ -21,10 +21,48 @@
     <cargoProject FILE="$PROJECT_DIR$/Cargo.toml" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="handle Other">
+    <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="include">
+      <change beforePath="$PROJECT_DIR$/.idea/drcDamllMysql.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drcDamllMysql.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/.cargo-ok" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/.cargo_vcs_info.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/Cargo.toml.orig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/LICENSE-APACHE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/LICENSE-MIT" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/README.tpl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/azure-pipelines.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/build.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/build.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/local_infile.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/local_infile.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/opts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/opts.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/pool.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/pool.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/query.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/query.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/query_result.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/query_result.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/queryable.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/queryable.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/stmt.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/stmt.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/stmt_cache.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/stmt_cache.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/transaction.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/transaction.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/error.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/io/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/io/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/io/tcp.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/io/tcp.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/Cargo.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/binlog_file.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/binlog_file.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/bit_set.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/bit_set.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/column_types.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/errors.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/errors.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/event.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/jsonb.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/jsonb.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/packet_helpers.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/table_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/table_map.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/tell.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/tell.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/value.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/value.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,10 +120,16 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/pkg" />
     </key>
   </component>
   <component name="RunManager" selected="Cargo.Run mysqlbinlog-network">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Run mysqlbinlog-network" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package mysqlbinlog-network --bin mysqlbinlog-network" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -182,11 +226,6 @@
         <option name="CARGO.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Run mysqlbinlog-network" />
@@ -242,14 +281,8 @@
       <workItem from="1625194129605" duration="839000" />
       <workItem from="1625218666635" duration="410000" />
       <workItem from="1625219773717" duration="1416000" />
-      <workItem from="1625451074161" duration="2580000" />
-    </task>
-    <task id="LOCAL-00015" summary="get conn">
-      <created>1608862757599</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1608862757599</updated>
+      <workItem from="1625451074161" duration="2601000" />
+      <workItem from="1625455260050" duration="3007000" />
     </task>
     <task id="LOCAL-00016" summary="get conn">
       <created>1608862920445</created>
@@ -587,7 +620,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625452734160</updated>
     </task>
-    <option name="localTasksCounter" value="64" />
+    <task id="LOCAL-00064" summary="include">
+      <created>1625454575397</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1625454575397</updated>
+    </task>
+    <option name="localTasksCounter" value="65" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -633,7 +673,8 @@
     <MESSAGE value="set server id" />
     <MESSAGE value="1.0.1" />
     <MESSAGE value="handle Other" />
-    <option name="LAST_COMMIT_MESSAGE" value="handle Other" />
+    <MESSAGE value="include" />
+    <option name="LAST_COMMIT_MESSAGE" value="include" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

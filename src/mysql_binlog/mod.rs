@@ -11,7 +11,7 @@
 //!
 //! ```no_run
 //! fn main() {
-//!     for event in mysql_binlog::parse_file("bin-log.000001").unwrap() {
+//!     for event in crate::mysql_binlog::parse_file("bin-log.000001").unwrap() {
 //!         println!("{:?}", event.unwrap());
 //!     }
 //! }
@@ -257,6 +257,8 @@ mod tests {
 
     use super::{parse_file, parse_reader};
     use crate::event::TypeCode;
+    use crate::mysql_binlog::event::TypeCode;
+    use crate::mysql_binlog::value::MySQLValue;
     use crate::value::MySQLValue;
 
     #[test]

@@ -2,8 +2,8 @@ use std::fs::File;
 use std::io::{self, Read, Seek};
 use std::path::{Path, PathBuf};
 
-use crate::errors::{BinlogParseError, EventParseError};
-use crate::event::{Event, TypeCode};
+use crate::mysql_binlog::errors::{BinlogParseError, EventParseError};
+use crate::mysql_binlog::event::{Event, TypeCode};
 
 /// Low level wrapper around a single Binlog file. Use this if you
 /// want to introspect all events (including internal events like the FDE

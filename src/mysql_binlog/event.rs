@@ -5,14 +5,14 @@ use byteorder::{ByteOrder, LittleEndian, ReadBytesExt};
 use serde_derive::Serialize;
 use uuid::Uuid;
 
-use crate::bit_set::BitSet;
-use crate::column_types::ColumnType;
-use crate::errors::EventParseError::EofError;
-use crate::errors::{ColumnParseError, EventParseError};
-use crate::packet_helpers::*;
-use crate::table_map::{SingleTableMap, TableMap};
-use crate::tell::Tell;
-use crate::value::MySQLValue;
+use crate::mysql_binlog::bit_set::BitSet;
+use crate::mysql_binlog::column_types::ColumnType;
+use crate::mysql_binlog::errors::EventParseError::EofError;
+use crate::mysql_binlog::errors::{ColumnParseError, EventParseError};
+use crate::mysql_binlog::packet_helpers::*;
+use crate::mysql_binlog::table_map::{SingleTableMap, TableMap};
+use crate::mysql_binlog::tell::Tell;
+use crate::mysql_binlog::value::MySQLValue;
 
 #[derive(Debug, PartialEq, Eq, Clone, Copy, Serialize)]
 #[serde(rename_all = "SCREAMING_SNAKE_CASE")]

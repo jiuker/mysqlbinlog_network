@@ -2,10 +2,10 @@ use std::io::{self, Read};
 
 use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 
-use crate::errors::ColumnParseError;
-use crate::jsonb;
-use crate::packet_helpers::*;
-use crate::value::MySQLValue;
+use crate::mysql_binlog::errors::ColumnParseError;
+use crate::mysql_binlog::jsonb;
+use crate::mysql_binlog::packet_helpers::*;
+use crate::mysql_binlog::value::MySQLValue;
 
 #[derive(Debug, Eq, PartialEq, Clone)]
 pub enum ColumnType {

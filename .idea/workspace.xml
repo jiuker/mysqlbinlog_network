@@ -22,47 +22,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="include">
-      <change beforePath="$PROJECT_DIR$/.idea/drcDamllMysql.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drcDamllMysql.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/.cargo-ok" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/.cargo_vcs_info.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/Cargo.toml.orig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/LICENSE-APACHE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/LICENSE-MIT" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/README.tpl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/azure-pipelines.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/build.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/build.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/local_infile.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/local_infile.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/opts.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/opts.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/pool.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/pool.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/query.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/query.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/query_result.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/query_result.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/queryable.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/queryable.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/stmt.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/stmt.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/stmt_cache.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/stmt_cache.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/conn/transaction.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/conn/transaction.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/error.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/error.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/io/mod.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/io/mod.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/io/tcp.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/io/tcp.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql-20.1.0/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/Cargo.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/binlog_file.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/binlog_file.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/bit_set.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/bit_set.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/column_types.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/errors.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/errors.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/event.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/jsonb.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/jsonb.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/lib.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/packet_helpers.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/table_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/table_map.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/tell.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/tell.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mysql_binlog-0.3.1/src/value.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/src/value.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/lib.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/lib.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/mod.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/Cargo.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/binlog_file.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/binlog_file.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/bit_set.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/bit_set.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/column_types.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/errors.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/errors.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/event.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/jsonb.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/jsonb.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/lib.rs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/packet_helpers.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/table_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/table_map.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/tell.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/tell.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/src/value.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/value.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pkg/event.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/pkg/event.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +86,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/mysql_binlog" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="org.rust.cargo.project.model.PROJECT_DISCOVERY" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
@@ -117,6 +95,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/mysql_binlog" />
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -282,14 +261,7 @@
       <workItem from="1625218666635" duration="410000" />
       <workItem from="1625219773717" duration="1416000" />
       <workItem from="1625451074161" duration="2601000" />
-      <workItem from="1625455260050" duration="3007000" />
-    </task>
-    <task id="LOCAL-00016" summary="get conn">
-      <created>1608862920445</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1608862920445</updated>
+      <workItem from="1625455260050" duration="4026000" />
     </task>
     <task id="LOCAL-00017" summary="get conn">
       <created>1608875284296</created>
@@ -627,7 +599,14 @@
       <option name="project" value="LOCAL" />
       <updated>1625454575397</updated>
     </task>
-    <option name="localTasksCounter" value="65" />
+    <task id="LOCAL-00065" summary="include">
+      <created>1625463577538</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1625463577538</updated>
+    </task>
+    <option name="localTasksCounter" value="66" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

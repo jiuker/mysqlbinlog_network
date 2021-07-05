@@ -1,6 +1,6 @@
 use std::collections::BTreeMap;
 
-use crate::column_types::ColumnType;
+use crate::mysql_binlog::column_types::ColumnType;
 
 #[derive(Debug)]
 /// Opaque reference to a table map, intended to be consumed by [`Event`]

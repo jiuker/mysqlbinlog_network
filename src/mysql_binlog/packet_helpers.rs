@@ -1,6 +1,6 @@
 use std::io::{self, Cursor, Read};
 
-use crate::errors::DecimalParseError;
+use crate::mysql_binlog::errors::DecimalParseError;
 
 use bigdecimal::BigDecimal;
 use byteorder::{BigEndian, ByteOrder, LittleEndian, ReadBytesExt};

@@ -1,3 +1,7 @@
+use crate::mysql_binlog;
+use crate::mysql_binlog::event::EventData::{EventHeader, FormatDescriptionEvent};
+use crate::mysql_binlog::event::{ChecksumAlgorithm, EVENT_HEADER_SIZE};
+use crate::mysql_binlog::table_map::TableMap;
 use crate::none;
 use crate::none_ref;
 use crate::pkg::event::Event;
@@ -6,15 +10,11 @@ use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use mysql::consts::Command;
 use mysql::prelude::Queryable;
 use mysql::{Conn, Opts};
-use mysql_binlog::event::EventData::{EventHeader, FormatDescriptionEvent};
-use mysql_binlog::event::{ChecksumAlgorithm, EVENT_HEADER_SIZE};
-use mysql_binlog::table_map::TableMap;
 use std::error::Error;
 use std::io::{Cursor, Read, Write};
 use std::ops::{Deref, DerefMut};
 use std::result;
 use std::str::FromStr;
-
 pub struct OffsetConfig {
     pub pos: Option<(String, u32)>,
     pub gtid: Option<Gtid>,

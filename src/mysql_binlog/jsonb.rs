@@ -9,9 +9,9 @@ use byteorder::{LittleEndian, ReadBytesExt};
 use serde_json::map::Map as JsonMap;
 use serde_json::Value as JsonValue;
 
-use crate::column_types::ColumnType;
-use crate::errors::JsonbParseError;
-use crate::packet_helpers;
+use crate::mysql_binlog::column_types::ColumnType;
+use crate::mysql_binlog::errors::JsonbParseError;
+use crate::mysql_binlog::packet_helpers;
 
 enum FieldType {
     SmallObject,

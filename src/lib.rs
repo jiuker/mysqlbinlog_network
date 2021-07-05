@@ -1,4 +1,5 @@
 pub mod client;
+pub mod mysql_binlog;
 pub mod pkg;
 
 pub use client::sync::OffsetConfig;

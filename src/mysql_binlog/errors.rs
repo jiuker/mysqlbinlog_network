@@ -1,4 +1,4 @@
-use crate::column_types;
+use crate::mysql_binlog::column_types;
 use thiserror::Error;
 
 #[derive(Debug, Error)]

@@ -1,7 +1,7 @@
 /// MySQL uses a bizarro custom encoding that they call JSONB (no relation to the PostgreSQL column
 /// type) for JSON values. No, I don't know why they didn't just use BSON or CBOR. I think they
 /// might just hate me.
-use std::io::{Bytes, Cursor};
+use std::io::Cursor;
 use std::iter::FromIterator;
 
 use base64;

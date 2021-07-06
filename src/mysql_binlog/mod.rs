@@ -199,7 +199,7 @@ impl BinlogFileParserBuilder<File> {
     pub fn try_from_path<P: AsRef<Path>>(file_name: P) -> Result<Self, BinlogParseError> {
         let bf = binlog_file::BinlogFile::try_from_path(file_name.as_ref())?;
         Ok(BinlogFileParserBuilder {
-            bf: bf,
+            bf,
             start_position: None,
         })
     }
@@ -210,7 +210,7 @@ impl<BR: Read + Seek> BinlogFileParserBuilder<BR> {
     pub fn try_from_reader(r: BR) -> Result<Self, BinlogParseError> {
         let bf = binlog_file::BinlogFile::try_from_reader(r)?;
         Ok(BinlogFileParserBuilder {
-            bf: bf,
+            bf,
             start_position: None,
         })
     }

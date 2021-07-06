@@ -293,8 +293,7 @@ impl ColumnType {
                     // 不应该出现的类型
                     Err(ColumnParseError::UnimplementedTypeError {
                         column_type: self.clone(),
-                    }
-                    .into())
+                    })
                 }
             }
             &ColumnType::NewDecimal(precision, decimal_places) => {
@@ -321,8 +320,7 @@ impl ColumnType {
                 // not implemented by MySQL
                 Err(ColumnParseError::UnimplementedTypeError {
                     column_type: self.clone(),
-                }
-                .into())
+                })
             }
             &ColumnType::Set(size) => {
                 let nbits = size * 8;

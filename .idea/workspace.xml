@@ -23,8 +23,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4410f87f-482a-4d86-8430-760ccbc3930c" name="Default Changelist" comment="include">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cargo.toml" beforeDir="false" afterPath="$PROJECT_DIR$/Cargo.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/sync.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/sync.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/column_types.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/column_types.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/jsonb.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/jsonb.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/packet_helpers.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/packet_helpers.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/mysql_binlog/table_map.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/mysql_binlog/table_map.rs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +54,18 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/client/sync.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.cargo/git/checkouts/mysql-patch-2b3cb9098658eac0/b990f88/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/mysql_binlog/event.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/mysql_binlog/jsonb.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/std/src/io/cursor.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/mysql_binlog/column_types.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/main.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/mysql/src/conn/mod.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/core/src/macros/mod.rs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/src/lib.rs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="ipcb6j8u" />
@@ -88,11 +103,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Cargo.Run mysqlbinlog-network">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Run mysqlbinlog-network" type="CargoCommandRunConfiguration" factoryName="Cargo Command" temporary="true">
       <option name="command" value="run --package mysqlbinlog-network --bin mysqlbinlog-network" />
       <option name="workingDirectory" value="file://$PROJECT_DIR$" />
@@ -192,10 +202,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Cargo.Run mysqlbinlog-network" />
-        <item itemvalue="Cargo.Test pkg::mysql_gtid::test_gtid_from" />
-        <item itemvalue="Cargo.Test client::sync::test_conn_progress" />
         <item itemvalue="Cargo.run" />
         <item itemvalue="Cargo.build" />
+        <item itemvalue="Cargo.Test pkg::mysql_gtid::test_gtid_from" />
+        <item itemvalue="Cargo.Test client::sync::test_conn_progress" />
       </list>
     </recent_temporary>
   </component>
@@ -246,6 +256,11 @@
       <workItem from="1625219773717" duration="1416000" />
       <workItem from="1625451074161" duration="2601000" />
       <workItem from="1625455260050" duration="4026000" />
+      <workItem from="1625474436982" duration="164000" />
+      <workItem from="1625537466308" duration="1338000" />
+      <workItem from="1625539634605" duration="67000" />
+      <workItem from="1625539735057" duration="873000" />
+      <workItem from="1625541373534" duration="4813000" />
     </task>
     <task id="LOCAL-00018" summary="get conn">
       <created>1608875418868</created>
@@ -638,17 +653,6 @@
     <MESSAGE value="handle Other" />
     <MESSAGE value="include" />
     <option name="LAST_COMMIT_MESSAGE" value="include" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/client/sync.rs</url>
-          <line>248</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

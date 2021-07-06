@@ -13,6 +13,7 @@ pub struct SingleTableMap {
 /// A MySQL binary log includes Table Map events; the first time a table is referenced in a given
 /// binlog, a TME will be emitted describing the fields of that table and assigning them to a
 /// binlog-unique identifier. The TableMap object is used to keep track of that mapping.
+#[derive(Default)]
 pub struct TableMap {
     inner: BTreeMap<u64, SingleTableMap>,
 }
@@ -20,7 +21,7 @@ pub struct TableMap {
 impl TableMap {
     pub fn new() -> Self {
         TableMap {
-            inner: BTreeMap::new(),
+            inner: Default::default(),
         }
     }
 

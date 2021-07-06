@@ -241,15 +241,15 @@ impl Runner {
         let mut state = String::with_capacity(5);
         cursor.read_to_string(&mut state)?;
         let mut message = "".to_string();
-        cursor.read_to_string(&mut message);
+        cursor.read_to_string(&mut message)?;
         Ok((code, state, message))
     }
     pub fn get_event(&mut self) -> Result<Event> {
         loop {
             match self.read_packet() {
                 Ok(data) => match none!(data.get(0)) {
-                    &0 => return self.parse_event(data),
-                    &0xff => {
+                    0 => return self.parse_event(data),
+                    0xff => {
                         let (code, state, message) = self.handle_error_packet(data)?;
                         return Err(Box::from(format!("{}{}:{}", code, state, message)));
                     }

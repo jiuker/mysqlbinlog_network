@@ -232,16 +232,16 @@ pub(crate) fn little_decode_bit<R: Read>(r: &mut R, nbits: u16, length: u16) -> 
 
 fn fixed_length_int(buf: &[u8]) -> u64 {
     let mut num = 0u64;
-    for i in 0..buf.len() {
-        num |= (buf[i] as u64) << (i as u32) * 8;
+    for (i, item) in buf.iter().enumerate() {
+        num |= (*item as u64) << ((i as u32) * 8);
     }
     num
 }
 
 fn bf_fixed_length_int(buf: &[u8]) -> u64 {
     let mut num = 0u64;
-    for i in 0..buf.len() {
-        num |= (buf[i] as u64) << ((buf.len() - i - 1) as u32) * 8;
+    for (i, item) in buf.iter().enumerate() {
+        num |= (*item as u64) << (((buf.len() - i - 1) as u32) * 8);
     }
     num
 }

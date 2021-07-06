@@ -1,7 +1,7 @@
 /// MySQL uses a bizarro custom encoding that they call JSONB (no relation to the PostgreSQL column
 /// type) for JSON values. No, I don't know why they didn't just use BSON or CBOR. I think they
 /// might just hate me.
-use std::io::Cursor;
+use std::io::{Bytes, Cursor};
 use std::iter::FromIterator;
 
 use base64;
@@ -65,7 +65,7 @@ enum CompoundType {
 }
 
 pub fn parse(blob: Vec<u8>) -> Result<JsonValue, JsonbParseError> {
-    let mut cursor = Cursor::new(blob);
+    let mut cursor = Cursor::new(blob.as_slice());
     parse_any(&mut cursor)
 }
 
@@ -85,7 +85,7 @@ fn parse_maybe_inlined_value(
             0x00 => JsonValue::Null,
             0x01 => JsonValue::Bool(true),
             0x02 => JsonValue::Bool(false),
-            i => return Err(JsonbParseError::InvalidLiteral(i).into()),
+            i => return Err(JsonbParseError::InvalidLiteral(i)),
         },
         Ok(FieldType::Uint16) => JsonValue::from(cursor.read_u16::<LittleEndian>()?),
         Ok(FieldType::Int16) => JsonValue::from(cursor.read_i16::<LittleEndian>()?),
@@ -105,7 +105,7 @@ fn parse_maybe_inlined_value(
 }
 
 fn parse_compound(
-    mut cursor: &mut Cursor<Vec<u8>>,
+    cursor: &mut Cursor<&[u8]>,
     compound_size: CompoundSize,
     compound_type: CompoundType,
 ) -> Result<JsonValue, JsonbParseError> {
@@ -158,7 +158,7 @@ fn parse_compound(
                     return Ok(JsonValue::Null);
                 }
                 cursor.set_position(key_offset as u64 + 1);
-                let key = packet_helpers::read_nbytes(&mut cursor, key_length)?;
+                let key = packet_helpers::read_nbytes(cursor, key_length)?;
                 let key = String::from_utf8_lossy(&key).into_owned();
                 rsl.push(key);
             }
@@ -177,7 +177,6 @@ fn parse_compound(
                 CompoundType::Object => key_entry_size * count,
             };
             let tp_data = cursor.get_ref().get(entry_offset + 1).unwrap();
-            let tp_data_c = (*tp_data).clone();
             let tp = FieldType::from_byte(*tp_data)?;
             let is_inline = match tp {
                 FieldType::Uint16 | FieldType::Int16 | FieldType::Literal => true,
@@ -189,7 +188,7 @@ fn parse_compound(
             };
             if is_inline {
                 let data = &cursor.get_ref()[entry_offset + 1..entry_offset + value_entry_size + 1];
-                let mut cur = Cursor::new(data.to_vec());
+                let mut cur = Cursor::new(data);
                 let value = parse_any(&mut cur)?;
                 rsl.push(value);
                 continue;
@@ -202,9 +201,9 @@ fn parse_compound(
             if data_length < value_offset {
                 return Ok(JsonValue::Null);
             }
-            let mut data = vec![tp_data_c];
+            let mut data = vec![*tp_data];
             data.extend_from_slice(&cursor.get_ref()[value_offset + 1..data_length]);
-            let mut cur = Cursor::new(data);
+            let mut cur = Cursor::new(data.as_slice());
             let value = parse_any(&mut cur)?;
             rsl.push(value);
         }
@@ -218,13 +217,13 @@ fn parse_compound(
     })
 }
 
-fn parse_any(cursor: &mut Cursor<Vec<u8>>) -> Result<JsonValue, JsonbParseError> {
+fn parse_any(cursor: &mut Cursor<&[u8]>) -> Result<JsonValue, JsonbParseError> {
     let type_indicator = FieldType::from_byte(cursor.read_u8()?)?;
     parse_any_with_type_indicator(cursor, type_indicator)
 }
 
 fn parse_any_with_type_indicator(
-    mut cursor: &mut Cursor<Vec<u8>>,
+    mut cursor: &mut Cursor<&[u8]>,
     type_indicator: FieldType,
 ) -> Result<JsonValue, JsonbParseError> {
     match type_indicator {

@@ -196,7 +196,7 @@ fn parse_compound(
             cursor.set_position(entry_offset as u64 + 2);
             let value_offset = match compound_size {
                 CompoundSize::Small => u32::from(cursor.read_u16::<LittleEndian>()?) as usize,
-                CompoundSize::Large => u32::from(cursor.read_u32::<LittleEndian>()?) as usize,
+                CompoundSize::Large => cursor.read_u32::<LittleEndian>()? as usize,
             };
             if data_length < value_offset {
                 return Ok(JsonValue::Null);
@@ -231,7 +231,7 @@ fn parse_any_with_type_indicator(
             0x00 => JsonValue::Null,
             0x01 => JsonValue::Bool(true),
             0x02 => JsonValue::Bool(false),
-            i => return Err(JsonbParseError::InvalidLiteral(u16::from(i)).into()),
+            i => return Err(JsonbParseError::InvalidLiteral(u16::from(i))),
         }),
         FieldType::Int16 => {
             let val = cursor.read_i16::<LittleEndian>()?;
